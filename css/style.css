@@ -1,6 +1,6 @@
 /*
 =========================
-   1. GLOBAL
+   GLOBAL
 =========================
 */
 
@@ -169,7 +169,7 @@ body.tabbed-view #home.section.is-active + #activities.section {
 
 /*
 =========================
-   2. NAVIGATION
+   NAVIGATION
 =========================
 */
 
@@ -217,7 +217,7 @@ header {
 
 /*
 =========================
-   3. HOME
+   HOME
 =========================
 */
 
@@ -277,7 +277,7 @@ header {
 
 /*
 =========================
-   4. WHAT I DO
+   WHAT I DO
 =========================
 */
 
@@ -344,7 +344,7 @@ header {
 
 /*
 =========================
-   5. UNIFIED GRID
+   UNIFIED GRID
 =========================
 */
 
@@ -387,7 +387,7 @@ header {
 
 /*
 =========================
-   13. FOOTER
+   FOOTER
 =========================
 */
 
@@ -437,6 +437,11 @@ header {
 .social-list__item { margin: 0 .75em; }
 .social-list__link { padding: .5em; display: inline-block; transition: transform 0.2s; }
 .social-list__link:hover { transform: translateY(-3px); }
+
+.fa-orcid {
+    font-size: 1.1em;
+    vertical-align: middle;
+}
 
 /*
 =========================
