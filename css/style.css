@@ -148,10 +148,15 @@ h3 { font-size: var(--fs-h3); }
     margin-bottom: 0;
 }
 
-.home_img,
+.home_img {
+    box-shadow: var(--bs);
+    border-radius: 8px;
+}
+
 .experience_img {
     box-shadow: var(--bs);
     border-radius: 8px;
+    margin-top: 1.25rem;
 }
 
 body.tabbed-view .section {
