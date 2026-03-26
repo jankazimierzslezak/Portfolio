@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 :root {
     --ff-primary: 'Inter', 'Segoe UI', Arial, sans-serif;
     --ff-secondary: var(--ff-primary);
@@ -246,13 +251,15 @@ header {
     }
 
     .role {
+        grid-area: subtitle;
         grid-column: 1 / -1;
         grid-row: 2;
         align-self: start;
         text-align: left;
         position: relative;
         z-index: 1;
-        width: calc(100% + 1.25em);
+        width: auto;
+        margin-right: -2em;
         padding-right: calc(280px + 3em);
     }
 }
