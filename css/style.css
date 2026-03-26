@@ -259,8 +259,7 @@ header {
         position: relative;
         z-index: 1;
         width: auto;
-        margin-right: -2em;
-        padding-right: calc(280px + 3em);
+        max-width: 100%;
     }
 }
 
