@@ -155,10 +155,6 @@ h3 { font-size: var(--fs-h3); }
     border-radius: 8px;
 }
 
-.experience_img {
-    margin-top: 1.5rem;
-}
-
 body.tabbed-view .section {
     display: none;
 }
