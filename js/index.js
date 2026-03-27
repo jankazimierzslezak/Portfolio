@@ -56,7 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             event.preventDefault();
             showTab(targetId);
-            window.location.hash = targetId;
+            
+            // Zmiana adresu URL bez wywoływania natywnego, gwałtownego skoku
+            history.pushState(null, null, '#' + targetId);
+            
+            // Przewinięcie strony płynnie na samą górę
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     });
 
