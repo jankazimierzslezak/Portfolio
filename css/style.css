@@ -263,8 +263,8 @@ header {
         text-align: left;
         position: relative;
         z-index: 1;
-        width: auto;
-        max-width: 100%;
+        width: calc(100% + 20px); 
+        max-width: none; 
     }
 }
 
