@@ -1,98 +1,110 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = Array.from(document.querySelectorAll('.nav__link'));
-    const sections = Array.from(document.querySelectorAll('.section'));
-    const homeSection = document.getElementById('home');
-    const activitiesSection = document.getElementById('activities');
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jan Ślężak - Portfolio</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous"/>  
+    
+    <link rel="stylesheet" href="css/style.css">
 
-    const validIds = navLinks
-        .map(link => link.getAttribute('href'))
-        .filter(href => href && href.startsWith('#'))
-        .map(href => href.slice(1));
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body>
 
-    function setActiveLink(targetId) {
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            link.classList.toggle('is-active', href === `#${targetId}`);
-        });
-    }
-
-    function hideAllSections() {
-        sections.forEach(section => {
-            section.classList.remove('is-active');
-        });
-    }
-
-    function showTab(targetId) {
-        const id = validIds.includes(targetId) ? targetId : 'home';
-
-        hideAllSections();
-
-        if (id === 'home') {
-            if (homeSection) homeSection.classList.add('is-active');
-            if (activitiesSection) activitiesSection.classList.add('is-active');
-        } else {
-            const targetSection = document.getElementById(id);
-            if (targetSection) targetSection.classList.add('is-active');
-        }
-
-        setActiveLink(id);
-    }
-
-    function getHashTarget() {
-        const hash = window.location.hash.replace('#', '');
-        return validIds.includes(hash) ? hash : 'home';
-    }
-
-    document.body.classList.add('tabbed-view');
-    showTab(getHashTarget());
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', event => {
-            const href = link.getAttribute('href');
-            if (!href || !href.startsWith('#')) return;
-
-            const targetId = href.slice(1);
-            if (!validIds.includes(targetId)) return;
-
-            event.preventDefault();
-            showTab(targetId);
+    <section class="section is-active" id="portfolio">
+        
+        <div class="portfolio-intro" style="margin-top: 2rem; margin-bottom: 4rem;">
+            <h1 class="interview">
+                Hi, I am <strong>Jan Ślężak</strong>
+            </h1>
+            <p class="role">Medical Student</p>
             
-            // Zmiana adresu URL bez wywoływania natywnego, gwałtownego skoku
-            history.pushState(null, null, '#' + targetId);
+            <img src="img/JanSlezak.png" alt="Jan Ślężak" class="home_img" width="280" height="420" style="max-width: 100%; height: auto;">
+        </div>
+
+        <div class="portfolio-activities" style="margin-bottom: 0;">
+            <h2 class="title">What I do</h2>
+            <div class="body">
+                <article class="item">
+                    <h3>Bone Marrow Assessment</h3>
+                    <p>Pre-screening bone marrow trephine biopsies, assisting with pathology reports and developing practical skills in histopathology slide review using H&E and immunohistochemistry.</p>
+                </article>
+                <article class="item">
+                    <h3>AI Annotation</h3>
+                    <p>Annotating CD138-positive plasma cells, CD79a-positive B cells, CD56-positive natural killer cells and CD15+ myeloid cells on scanned histopathology slides, with a focus on artificial intelligence support in pathology.</p>
+                </article>
+                <article class="item">
+                    <h3>Writing</h3>
+                    <p>Contributing to research projects, preparing manuscript sections, creating scientific figures and presenting work at conferences in pathology and clinical medicine.</p>
+                </article>
+            </div>
+        </div>
+
+        <div style="position: relative; width: 100%;">
             
-            // Przewinięcie strony płynnie na samą górę
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    });
+            <div class="subway-wrapper" id="subway-wrapper">
+                <div class="subway-container" id="subway-container">
+                    <div class="subway-line"></div>
+                </div>
+            </div>
 
-    window.addEventListener('hashchange', () => {
-        showTab(getHashTarget());
-    });
+            <div id="station-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <span class="close-modal" id="close-modal">&times;</span>
+                    <div class="modal-header">
+                        <span id="modal-date" class="modal-badge"></span>
+                        <h3 id="modal-title"></h3>
+                        <h4 id="modal-subtitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-desc" class="modal-text"></div>
+                        <img id="modal-img" src="" alt="Detail image" style="display: none; max-width: 100%; border-radius: 8px; margin-top: 1rem;">
+                    </div>
+                </div>
+            </div>
 
-    const pdfButton = document.getElementById('generate-pdf-btn');
-    if (pdfButton) {
-        pdfButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            window.print();
-        });
-    }
+        </div>
+    </section>
 
-    const lastModifiedElement = document.getElementById('last-modified');
-    if (lastModifiedElement) {
-        const lastModifiedDate = new Date(document.lastModified);
+    <footer class="footer">
+        <a href="mailto:jankazimierzslezak@gmail.com" class="footer__link">jankazimierzslezak@gmail.com</a>
+        
+        <ul class="social-list">
+            <li class="social-list__item">
+                <a class="social-list__link" href="https://www.linkedin.com/in/jan-%C5%9Bl%C4%99%C5%BCak-46602b1b8/" target="_blank" aria-label="Mój profil na LinkedIn">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="social-list__item">
+                <a class="social-list__link" href="https://www.facebook.com/jan.slezak3/?locale=pl_PL" target="_blank" aria-label="Mój profil na Facebooku">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="social-list__item">
+                <a class="social-list__link" href="https://www.instagram.com/jan_slezak_/" target="_blank" aria-label="Mój profil na Instagramie">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="social-list__item">
+                <a class="social-list__link" href="https://orcid.org/0009-0006-1777-213X" target="_blank" title="ORCID Profile" aria-label="Mój profil naukowy ORCID">
+                    <i class="fab fa-orcid" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="social-list__item">
+                <a class="social-list__link" href="https://github.com/jankazimierzslezak" target="_blank" aria-label="Mój profil na GitHubie">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
 
-        const day = String(lastModifiedDate.getDate()).padStart(2, '0');
-        const month = String(lastModifiedDate.getMonth() + 1).padStart(2, '0');
-        const year = lastModifiedDate.getFullYear();
-     
-        lastModifiedElement.textContent = `Last updated: ${day}.${month}.${year}`;
-    }
+        <div class="footer__meta">
+            <p class="footer__date">Last updated: <span id="last-updated">...</span></p>
+            <p class="footer__date">&copy; 2026 Jan Ślężak. All rights reserved.</p>
+        </div>
+    </footer>
 
-    const yearElement = document.getElementById('current-year');
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
-    }
-});
+    <script src="js/script.js"></script>
+</body>
+</html>
