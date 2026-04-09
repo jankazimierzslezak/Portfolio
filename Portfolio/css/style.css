@@ -1,0 +1,544 @@
+/* =========================================
+   BAZA STRONY (Z pliku base.css)
+========================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Wymusza pionowy suwak, co eliminuje skakanie strony na boki */
+html {
+    overflow-y: scroll; 
+}
+
+html, body {
+    overflow-x: clip;
+    width: 100%;
+}
+
+:root {
+    --ff-primary: 'Inter', 'Segoe UI', Arial, sans-serif;
+    --ff-secondary: var(--ff-primary);
+    --fw-reg: 300;
+    --fw-bold: 800; 
+    --clr-light: #FCF8F9; 
+    --clr-dark: #3d314a;  
+    --clr-eosin: #c5839b; 
+    --clr-accent: #5286c4; 
+    --fs-h1: 3rem;
+    --fs-h2: 2.25rem;
+    --fs-h3: 1.25rem;
+    --fs-body: 1.05rem; 
+    --bs: 0 8px 24px rgba(61, 49, 74, 0.08),
+          0 2px 8px rgba(61, 49, 74, 0.04);
+}
+
+@media (min-width: 800px) {
+    :root {
+        --fs-h1: 4.5rem;
+        --fs-h2: 3.75rem;
+        --fs-h3: 1.5rem;
+        --fs-body: 1.125rem;
+    }
+}
+
+body {
+    background: var(--clr-light);
+    color: var(--clr-dark);
+    margin: 0;
+    font-family: var(--ff-primary);
+    font-size: var(--fs-body);
+    line-height: 1.7; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    padding: 3em 2em;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto; 
+    border-radius: 8px; 
+}
+
+strong {
+    font-weight: var(--fw-bold);
+}
+
+h1, h2, h3 {
+    line-height: 1.1;
+    margin: 0;
+    color: var(--clr-dark);
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+
+.title {
+    margin-bottom: .25em;
+    font-weight: 600;
+}
+
+.title::after {
+    content: '';
+    display: block;
+    width: 2.5em;
+    height: 3px;
+    opacity: 0.7;
+    margin: 0.35em 0 0.2em;
+    background: var(--clr-eosin);
+    border-radius: 3px;
+}
+
+.section {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.body {
+    max-width: 900px;
+}
+
+.item {
+    margin-bottom: 2rem;
+}
+
+.item:last-child {
+    margin-bottom: 0;
+}
+
+.item p {
+    margin: 0 0 0.35rem; 
+}
+
+.item ul {
+    margin: 0.4rem 0 0 1.1rem;
+    padding: 0;
+}
+
+.item li {
+    margin-bottom: 0.35rem;
+}
+
+.item li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   UKŁAD WIZYTÓWKI (Z pliku layout.css)
+========================================= */
+
+.home_img {
+    box-shadow: var(--bs);
+    border-radius: 8px;
+}
+
+/* USTAWIENIA SEKCJI PORTFOLIO (FULL WIDTH)  */
+#portfolio.section {
+    max-width: 100% !important;
+    width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+}
+
+/* WIZYTÓWKA */
+.portfolio-intro {
+    max-width: 1000px; 
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.interview { font-weight: 200; }
+.interview strong { display: block; font-weight: 700; }
+.portfolio-intro .interview { grid-area: title; }
+
+.role {
+    padding: .35em 1.2em;
+    font-family: var(--ff-secondary);
+    margin-bottom: 1em;
+    background: var(--clr-eosin);
+    color: #fff;
+    display: inline-block;
+    border-radius: 6px; 
+    font-weight: 500; 
+    letter-spacing: 0.5px; 
+    box-shadow: 0 4px 10px rgba(197, 131, 155, 0.25);
+}
+
+@media (min-width: 600px) {
+    .portfolio-intro {
+        align-items: center;
+        width: fit-content;
+        margin: 0 auto;
+        column-gap: 3em; 
+        grid-template-areas: "title img" "subtitle img";
+        grid-template-columns: minmax(0, 1fr) 280px;
+        display: grid;
+    }
+
+    .home_img {
+        grid-area: img;
+        width: 280px;
+        min-width: 280px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .role {
+        grid-area: subtitle;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        align-self: start;
+        text-align: left;
+        position: relative;
+        z-index: 1;
+        width: calc(100% + 20px);
+        max-width: none;
+    }
+}
+
+/* WHAT I DO */
+.portfolio-activities {
+    width: 100%; 
+    padding-top: 4em;
+    padding-bottom: 4em; 
+    /* POPRAWIONA ŚCIEŻKA DO ZDJĘCIA W TLE: */
+    background-image: url("../img/Section_of_bone_marrow_tissue_(Prussian_blue_stain).jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: #fff;
+    text-align: center;
+}
+
+.portfolio-activities::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(61, 49, 74, 0.7); 
+}
+
+.portfolio-activities > * { position: relative; z-index: 1; }
+.portfolio-activities .title { color: #fff; }
+.portfolio-activities .title::after { margin: 0.35em auto 0.75em; background: var(--clr-eosin); opacity: 0.9; }
+
+.portfolio-activities .body {
+    margin: 1.5em auto 0;
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 2rem; 
+    padding: 0 1.5rem;
+    max-width: 500px;
+}
+
+.portfolio-activities .item {
+    background: rgba(255, 255, 255, 0.05); 
+    padding: 1.5rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px); 
+    margin: 0; 
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-activities .item h3 {
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1.2; min-height: 2.2em; margin-bottom: 0.5em;
+    text-align: center; color: #fff;
+}
+
+.portfolio-activities .item p { 
+    margin-top: 0; 
+    color: rgba(255, 255, 255, 0.9); 
+}
+
+@media (min-width: 800px) {
+    .portfolio-activities .body {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1200px; 
+        padding: 0 2rem;
+    }
+}
+
+
+/* =========================================
+   MAPA OSI CZASU (Z pliku portfolio.css)
+========================================= */
+
+.subway-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    margin-bottom: 0 !important;
+    cursor: grab;
+    scrollbar-width: none; 
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.subway-wrapper:active { cursor: grabbing; }
+
+.subway-wrapper::-webkit-scrollbar { display: none; }
+
+.subway-container {
+    position: relative;
+    height: 960px;
+    margin: 0 40px;
+    transition: min-width 0.3s;
+}
+
+/* GŁÓWNA OŚ METRA */
+.subway-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    border-radius: 4px;
+    opacity: 0.8;
+    top: 480px; 
+    background-color: #d1d5db; 
+}
+
+/* WEKTOROWE ODNOGI */
+#subway-svg {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    pointer-events: none; 
+    z-index: 5; 
+}
+
+.station-segment-path {
+    fill: none;
+    stroke-width: 6px; 
+    stroke-linecap: round; 
+    stroke-linejoin: round; 
+    opacity: 0.7;
+    transition: opacity 0.2s ease, filter 0.2s ease, stroke-width 0.2s ease;
+}
+
+.station-segment-path.is-active {
+    opacity: 1;
+    stroke-width: 8px; 
+    filter: drop-shadow(0 2px 6px currentColor) brightness(1.1); 
+}
+
+/* STRUKTURA */
+.station-wrapper {
+    position: absolute;
+    width: 0; height: 0; 
+    z-index: 10;
+}
+
+.station-wrapper:hover { z-index: 20; }
+
+.station-dot {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 4px solid;
+    top: 0; left: 0;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+.station-wrapper:hover .station-dot {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.station-label {
+    position: absolute;
+    width: 180px;
+    white-space: normal; 
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--clr-dark);
+    text-align: left; 
+    transform: translate(0, -50%);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    cursor: pointer;
+}
+
+.station-wrapper:hover .station-label { 
+    color: #000; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+    transform: translate(0, -50%) scale(1.05); 
+}
+
+/* MODAL */
+.modal-overlay { 
+    display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.6); z-index: 9999; backdrop-filter: blur(3px); 
+    justify-content: center; align-items: center; padding: 20px; 
+}
+.modal-content { 
+    background: #fff; width: 100%; max-width: 600px; max-height: 90vh; 
+    overflow-y: auto; border-radius: 12px; padding: 2rem; position: relative; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: modalFadeIn 0.3s ease-out; 
+}
+@keyframes modalFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #888; transition: color 0.2s; }
+.close-modal:hover { color: #d74b4b; }
+.modal-badge { display: inline-block; background: var(--clr-accent); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+.modal-header h3 { margin: 0 0 0.2rem 0; font-size: 1.5rem; }
+.modal-header h4 { margin: 0 0 1.5rem 0; font-size: 1rem; color: #666; font-weight: 400; }
+.modal-text ul { padding-left: 20px; }
+.modal-text li { margin-bottom: 8px; }
+
+/* PIONOWE LINIE LAT (TŁO OSI) */
+.year-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #f3f4f6; 
+    z-index: 1; 
+    border-left: 1px dashed #d1d5db; 
+}
+
+.year-label {
+    position: absolute;
+    top: 50px; 
+    transform: translateX(-50%);
+    color: #9ca3af;
+    font-weight: 700;
+    font-size: 1.2rem;
+    z-index: 2;
+    background: #fafafa; 
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* ELIMINACJA PUSTEJ PRZESTRZENI NAD STOPKĄ */
+#portfolio.section{
+    padding-bottom: 0 !important;
+}
+
+/* =========================================
+   STOPKA (FOOTER)
+========================================= */
+.footer {
+    background: var(--clr-dark); 
+    color: #e8e4e8; 
+    text-align: center;
+    padding: 3em 0; 
+    font-size: var(--fs-h3); 
+    margin-top: auto;
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 1.5em;
+}
+
+.footer a { 
+    color: inherit; 
+    text-decoration: none; 
+    transition: color 0.3s ease, transform 0.2s ease; 
+}
+
+.footer__link { 
+    font-weight: 600; 
+}
+
+.footer__link:hover, 
+.social-list__link:hover { 
+    color: var(--clr-accent); 
+}
+
+.footer__date { 
+    font-size: 0.85rem; 
+    margin: 0; 
+    opacity: 0.7; 
+}
+
+.footer__meta { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.4em; 
+}
+
+.social-list { 
+    list-style: none; 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    row-gap: 1rem; 
+    margin: 0 auto; 
+    padding: 0; 
+}
+
+@media (max-width: 600px) { 
+    .social-list { max-width: 240px; } 
+}
+
+.social-list__item { 
+    margin: 0 .75em; 
+}
+
+.social-list__link { 
+    padding: .5em; 
+    display: inline-block; 
+    transition: transform 0.2s; 
+}
+
+.social-list__link:hover { 
+    transform: translateY(-3px); 
+}
+
+.fa-orcid { 
+    font-size: 1.1em; 
+    vertical-align: middle; 
+}
+
+/* =========================================
+   ANIMACJE STARTOWE I EFEKT KURTYNY
+========================================= */
+
+/* 1. Strona ukryta przed załadowaniem (opacity: 0) */
+html:not(.is-ready) body { 
+    opacity: 0; 
+}
+
+/* 2. Płynne pokazanie po dodaniu klasy .is-ready */
+html.is-ready body { 
+    opacity: 1; 
+    transition: opacity 0.6s ease-in-out; 
+}
+
+/* 3. Animacja wjazdu tekstu z dołu do góry */
+@keyframes fadeAndSlideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* 4. Zastosowanie animacji wjazdu na aktywnej sekcji */
+body.tabbed-view .section.is-active { 
+    animation: fadeAndSlideUp 0.1s ease-out forwards; 
+}
