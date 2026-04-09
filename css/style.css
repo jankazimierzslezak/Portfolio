@@ -1,7 +1,16 @@
+/* =========================================
+   BAZA STRONY (Z pliku base.css)
+========================================= */
+
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+}
+
+/* Wymusza pionowy suwak, co eliminuje skakanie strony na boki */
+html {
+    overflow-y: scroll; 
 }
 
 html, body {
@@ -51,14 +60,10 @@ section {
     padding: 3em 2em;
 }
 
-body.tabbed-view .section {
-    padding-top: 2.5em;
-    scroll-margin-top: 6.5em;
-}
-
 img {
     display: block;
     max-width: 100%;
+    height: auto; 
     border-radius: 8px; 
 }
 
@@ -101,28 +106,6 @@ h3 { font-size: var(--fs-h3); }
     max-width: 900px;
 }
 
-#education.section,
-#experience.section,
-#internships.section,
-#skills.section,
-#publications.section,
-#languages.section,
-#courses.section,
-#conferences.section {
-    max-width: 1400px;
-}
-
-#education .body,
-#experience .body,
-#internships .body,
-#skills .body,
-#publications .body,
-#languages .body,
-#courses .body,
-#conferences .body {
-    max-width: 100%;
-}
-
 .item {
     margin-bottom: 2rem;
 }
@@ -148,79 +131,35 @@ h3 { font-size: var(--fs-h3); }
     margin-bottom: 0;
 }
 
+
+/* =========================================
+   UKŁAD WIZYTÓWKI (Z pliku layout.css)
+========================================= */
+
 .home_img {
     box-shadow: var(--bs);
     border-radius: 8px;
 }
 
-.experience_img {
-    box-shadow: var(--bs);
-    border-radius: 8px;
-    margin-top: 1.25rem;
-}
-
-body.tabbed-view .section {
-    display: none;
-}
-
-body.tabbed-view .section.is-active {
-    display: block;
-}
-
-body.tabbed-view #home.section.is-active + #activities.section {
-    display: block;
-}
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: rgba(252, 248, 249, 0.85); 
-    backdrop-filter: blur(12px); 
-    -webkit-backdrop-filter: blur(12px);
-    padding: 0.75em 2em;
+/* USTAWIENIA SEKCJI PORTFOLIO (FULL WIDTH)  */
+#portfolio.section {
+    max-width: 100% !important;
     width: 100%;
-    border-bottom: 1px solid rgba(197, 131, 155, 0.2); 
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
 }
 
-.nav__list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5em;
-    margin: 0;
-    padding: 0;
-}
-
-.nav__link {
-    color: var(--clr-dark); 
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.nav__link.is-active,
-.nav__link:hover {
-    color: var(--clr-accent);
-}
-
-@media (max-width: 700px) {
-    header { padding: 0.75em 1em; }
-    .nav__list { gap: 0.75em 1em; }
-    .nav__link { font-size: 0.85rem; }
-}
-
-#home.section {
-    position: relative;
-    padding-top: 3em;
+/* WIZYTÓWKA */
+.portfolio-intro {
+    max-width: 1000px; 
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .interview { font-weight: 200; }
 .interview strong { display: block; font-weight: 700; }
-#home.section .interview { grid-area: title; }
+.portfolio-intro .interview { grid-area: title; }
 
 .role {
     padding: .35em 1.2em;
@@ -236,15 +175,14 @@ header {
 }
 
 @media (min-width: 600px) {
-    body:not(.tabbed-view) #home.section,
-    body.tabbed-view #home.section.is-active {
-        display: grid;
+    .portfolio-intro {
         align-items: center;
         width: fit-content;
         margin: 0 auto;
         column-gap: 3em; 
         grid-template-areas: "title img" "subtitle img";
         grid-template-columns: minmax(0, 1fr) 280px;
+        display: grid;
     }
 
     .home_img {
@@ -263,298 +201,344 @@ header {
         text-align: left;
         position: relative;
         z-index: 1;
-        width: calc(100% + 20px); 
-        max-width: none; 
+        width: calc(100% + 20px);
+        max-width: none;
     }
 }
 
-#activities.section {
-    max-width: none;
-    width: 100%;
-    margin: 0;
+/* WHAT I DO */
+.portfolio-activities {
+    width: 100%; 
     padding-top: 4em;
-    padding-bottom: 5.5em;
+    padding-bottom: 4em; 
+    /* POPRAWIONA ŚCIEŻKA DO ZDJĘCIA W TLE: */
     background-image: url("../img/Section_of_bone_marrow_tissue_(Prussian_blue_stain).jpg");
     background-size: cover;
     background-position: center;
     position: relative;
     color: #fff;
     text-align: center;
-    overflow: hidden;
 }
 
-#activities.section::before {
+.portfolio-activities::before {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(61, 49, 74, 0.7); 
 }
 
-#activities.section > * { position: relative; z-index: 1; }
-#activities.section .title { color: #fff; }
-#activities.section .title::after { margin: 0.35em auto 0.75em; background: var(--clr-eosin); opacity: 0.9; }
-#activities.section .body { margin-top: 1.5em; margin-bottom: 0; }
+.portfolio-activities > * { position: relative; z-index: 1; }
+.portfolio-activities .title { color: #fff; }
+.portfolio-activities .title::after { margin: 0.35em auto 0.75em; background: var(--clr-eosin); opacity: 0.9; }
 
-#activities.section .item {
+.portfolio-activities .body {
+    margin: 1.5em auto 0;
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 2rem; 
+    padding: 0 1.5rem;
     max-width: 500px;
-    margin: 0 auto 2.5rem;
+}
+
+.portfolio-activities .item {
     background: rgba(255, 255, 255, 0.05); 
     padding: 1.5rem;
     border-radius: 8px;
     backdrop-filter: blur(4px); 
-}
-
-#activities.section .item h3 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.2;
-    min-height: 2.2em;
-    margin-bottom: 0.5em;
-    text-align: center;
-    color: #fff;
-}
-
-#activities.section .item p { margin-top: 0; color: rgba(255, 255, 255, 0.9); }
-
-@media (min-width: 800px) {
-    #activities.section .body {
-        display: flex;
-        align-items: stretch; 
-        max-width: 1100px;
-        margin: 1.5em auto 0;
-        gap: 2em; 
-    }
-    #activities.section .item { margin-bottom: 0; flex: 1; }
-}
-
-@media (min-width: 600px) {
-    #education .item,
-    #experience .item,
-    #internships .item,
-    #skills .item,
-    #publications .item,
-    #languages .item,
-    #courses .item,
-    #conferences .item {
-        display: grid;
-        grid-template-columns: 1fr 320px; 
-        column-gap: 3rem;
-        align-items: center; 
-    }
-
-    #education .item > div,
-    #experience .item > div,
-    #internships .item > div,
-    #skills .item > div,
-    #publications .item > div,
-    #languages .item > div,
-    #courses .item > div,
-    #conferences .item > div {
-        grid-column: 1;
-    }
-
-    .experience_img {
-        grid-column: 2;
-        grid-row: 1;
-        width: 100%;
-        max-width: 320px;
-        height: auto; 
-        margin-top: 0;
-        display: block;
-    }
-}
-
-.footer {
-    background: var(--clr-dark);
-    color: #e8e4e8; 
-    text-align: center;
-    padding: 3em 0;
-    font-size: var(--fs-h3);
-    margin-top: auto;
-    width: 100%;
+    margin: 0; 
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+
+.portfolio-activities .item h3 {
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1.2; min-height: 2.2em; margin-bottom: 0.5em;
+    text-align: center; color: #fff;
+}
+
+.portfolio-activities .item p { 
+    margin-top: 0; 
+    color: rgba(255, 255, 255, 0.9); 
+}
+
+@media (min-width: 800px) {
+    .portfolio-activities .body {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1200px; 
+        padding: 0 2rem;
+    }
+}
+
+
+/* =========================================
+   MAPA OSI CZASU (Z pliku portfolio.css)
+========================================= */
+
+.subway-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    margin-bottom: 0 !important;
+    cursor: grab;
+    scrollbar-width: none; 
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.subway-wrapper:active { cursor: grabbing; }
+
+.subway-wrapper::-webkit-scrollbar { display: none; }
+
+.subway-container {
+    position: relative;
+    height: 960px;
+    margin: 0 40px;
+    transition: min-width 0.3s;
+}
+
+/* GŁÓWNA OŚ METRA */
+.subway-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    border-radius: 4px;
+    opacity: 0.8;
+    top: 480px; 
+    background-color: #d1d5db; 
+}
+
+/* WEKTOROWE ODNOGI */
+#subway-svg {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    pointer-events: none; 
+    z-index: 5; 
+}
+
+.station-segment-path {
+    fill: none;
+    stroke-width: 6px; 
+    stroke-linecap: round; 
+    stroke-linejoin: round; 
+    opacity: 0.7;
+    transition: opacity 0.2s ease, filter 0.2s ease, stroke-width 0.2s ease;
+}
+
+.station-segment-path.is-active {
+    opacity: 1;
+    stroke-width: 8px; 
+    filter: drop-shadow(0 2px 6px currentColor) brightness(1.1); 
+}
+
+/* STRUKTURA */
+.station-wrapper {
+    position: absolute;
+    width: 0; height: 0; 
+    z-index: 10;
+}
+
+.station-wrapper:hover { z-index: 20; }
+
+.station-dot {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 4px solid;
+    top: 0; left: 0;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+.station-wrapper:hover .station-dot {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.station-label {
+    position: absolute;
+    width: 180px;
+    white-space: normal; 
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--clr-dark);
+    text-align: left; 
+    transform: translate(0, -50%);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    cursor: pointer;
+}
+
+.station-wrapper:hover .station-label { 
+    color: #000; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+    transform: translate(0, -50%) scale(1.05); 
+}
+
+/* MODAL */
+.modal-overlay { 
+    display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.6); z-index: 9999; backdrop-filter: blur(3px); 
+    justify-content: center; align-items: center; padding: 20px; 
+}
+.modal-content { 
+    background: #fff; width: 100%; max-width: 600px; max-height: 90vh; 
+    overflow-y: auto; border-radius: 12px; padding: 2rem; position: relative; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: modalFadeIn 0.3s ease-out; 
+}
+@keyframes modalFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #888; transition: color 0.2s; }
+.close-modal:hover { color: #d74b4b; }
+.modal-badge { display: inline-block; background: var(--clr-accent); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+.modal-header h3 { margin: 0 0 0.2rem 0; font-size: 1.5rem; }
+.modal-header h4 { margin: 0 0 1.5rem 0; font-size: 1rem; color: #666; font-weight: 400; }
+.modal-text ul { padding-left: 20px; }
+.modal-text li { margin-bottom: 8px; }
+
+/* PIONOWE LINIE LAT (TŁO OSI) */
+.year-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #f3f4f6; 
+    z-index: 1; 
+    border-left: 1px dashed #d1d5db; 
+}
+
+.year-label {
+    position: absolute;
+    top: 50px; 
+    transform: translateX(-50%);
+    color: #9ca3af;
+    font-weight: 700;
+    font-size: 1.2rem;
+    z-index: 2;
+    background: #fafafa; 
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* ELIMINACJA PUSTEJ PRZESTRZENI NAD STOPKĄ */
+#portfolio.section{
+    padding-bottom: 0 !important;
+}
+
+/* =========================================
+   STOPKA (FOOTER)
+========================================= */
+.footer {
+    background: var(--clr-dark); 
+    color: #e8e4e8; 
+    text-align: center;
+    padding: 3em 0; 
+    font-size: var(--fs-h3); 
+    margin-top: auto;
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
     gap: 1.5em;
 }
 
-.footer a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s ease, transform 0.2s ease;
+.footer a { 
+    color: inherit; 
+    text-decoration: none; 
+    transition: color 0.3s ease, transform 0.2s ease; 
 }
 
-.footer__link { font-weight: 600; }
-.footer__link:hover, .social-list__link:hover { color: var(--clr-accent); }
+.footer__link { 
+    font-weight: 600; 
+}
 
-.footer__date {
+.footer__link:hover, 
+.social-list__link:hover { 
+    color: var(--clr-accent); 
+}
+
+.footer__date { 
     font-size: 0.85rem; 
-    margin: 0;
-    opacity: 0.7;       
+    margin: 0; 
+    opacity: 0.7; 
 }
 
-.footer__meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4em;
+.footer__meta { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.4em; 
 }
 
-.social-list {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    row-gap: 1rem;
-    margin: 0 auto;
-    padding: 0;
+.social-list { 
+    list-style: none; 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    row-gap: 1rem; 
+    margin: 0 auto; 
+    padding: 0; 
 }
 
-@media (max-width: 600px) {
-    .social-list {
-        max-width: 240px;
+@media (max-width: 600px) { 
+    .social-list { max-width: 240px; } 
+}
+
+.social-list__item { 
+    margin: 0 .75em; 
+}
+
+.social-list__link { 
+    padding: .5em; 
+    display: inline-block; 
+    transition: transform 0.2s; 
+}
+
+.social-list__link:hover { 
+    transform: translateY(-3px); 
+}
+
+.fa-orcid { 
+    font-size: 1.1em; 
+    vertical-align: middle; 
+}
+
+/* =========================================
+   ANIMACJE STARTOWE I EFEKT KURTYNY
+========================================= */
+
+/* 1. Strona ukryta przed załadowaniem (opacity: 0) */
+html:not(.is-ready) body { 
+    opacity: 0; 
+}
+
+/* 2. Płynne pokazanie po dodaniu klasy .is-ready */
+html.is-ready body { 
+    opacity: 1; 
+    transition: opacity 0.6s ease-in-out; 
+}
+
+/* 3. Animacja wjazdu tekstu z dołu do góry */
+@keyframes fadeAndSlideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
     }
 }
 
-.social-list__item { margin: 0 .75em; }
-.social-list__link { padding: .5em; display: inline-block; transition: transform 0.2s; }
-.social-list__link:hover { transform: translateY(-3px); }
-
-.fa-orcid {
-    font-size: 1.1em;
-    vertical-align: middle;
-}
-
-@media print {
-    @page {
-        margin: 1cm;
-    }
-
-    body {
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-        
-        --fs-h1: 1.5rem;
-        --fs-h2: 1.25rem;
-        --fs-h3: 0.95rem;
-        --fs-body: 0.8rem;
-        
-        line-height: 1.3 !important; 
-    }
-
-    body.tabbed-view .section {
-        display: block !important;
-        padding: 0.2em 0 !important;
-    }
-
-    header, 
-    #activities.section, 
-    .footer {
-        display: none !important;
-    }
-
-    .section, 
-    .body, 
-    .item {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-
-    p, li {
-        text-align: justify !important;
-        -webkit-hyphens: auto !important;
-        -ms-hyphens: auto !important;
-        hyphens: auto !important; 
-    }
-
-    h1, h2, h3, .title, .interview, .role {
-        text-align: left !important;
-        margin-left: 0 !important;
-    }
-
-    h2.title {
-        margin-top: 0.2em !important;
-        margin-bottom: 0 !important;
-        page-break-inside: avoid;
-        break-inside: avoid;
-    }
-    
-    .title::after {
-        margin: 0.1em 0 0.1em; 
-        margin-left: 0 !important; 
-        height: 2px !important;
-    }
-
-    .item {
-        margin-bottom: 0.4rem !important; 
-        page-break-inside: avoid;
-        break-inside: avoid;
-    }
-
-    .item p {
-        margin: 0 0 0.1rem !important; 
-    }
-    
-    .item ul {
-        margin-top: 0.1rem !important;
-        margin-bottom: 0.1rem !important;
-        padding-left: 1.1rem !important;
-    }
-    
-    .item li {
-        margin-bottom: 0.1rem !important;
-    }
-
-    #education .item,
-    #experience .item,
-    #internships .item,
-    #skills .item,
-    #publications .item, 
-    #languages .item, 
-    #courses .item,
-    #conferences .item {
-        display: grid !important;
-        grid-template-columns: 1fr auto !important;
-        column-gap: 0.75rem !important;
-        align-items: flex-start !important;
-    }
-
-    .experience_img {
-        max-width: 100px !important;
-        grid-column: 2 !important;
-        grid-row: 1 !important;
-        margin-top: 0 !important;
-    }
-
-    #home.section {
-        display: grid !important;
-        grid-template-areas: "title img" "subtitle img" !important;
-        grid-template-columns: 1fr auto !important;
-        column-gap: 1rem !important;
-        align-items: flex-start !important;
-        width: 100% !important;
-        margin: 0 !important;
-    }
-
-    .home_img {
-        width: 120px !important; 
-        max-width: 120px !important; 
-        grid-area: img !important;
-    }
-    
-    #home.section .interview { 
-        grid-area: title !important; 
-    }
-
-    .role {
-        grid-area: subtitle !important;
-        grid-column: 1 !important;
-        margin-top: 0.2rem !important;
-        margin-bottom: 0.2rem !important;
-        width: auto !important;
-        padding: 0.1rem 0.5rem !important;
-        align-self: flex-start !important;
-    }
+/* 4. Zastosowanie animacji wjazdu na aktywnej sekcji */
+body.tabbed-view .section.is-active { 
+    animation: fadeAndSlideUp 0.1s ease-out forwards; 
 }
