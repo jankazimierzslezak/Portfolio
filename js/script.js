@@ -25,7 +25,7 @@ const portfolioData = [
     { id: "pub-ibd", line: "publications", dateLabel: "Oct 2024", date: "2024-10", title: "Co-author, Contemp. Pharm.", subtitle: "Prepared the chapter: Introduction and Inflammatory bowel diseases and fatty liver", description: `<p>Metabolic and cardiovascular disorders in patients with inflammatory bowel diseases</p><p><a href="https://doi.org/10.53139/FW.20241718" target="_blank">doi:10.53139/FW.20241718</a></p>`, image: null },
     { id: "pub-lynch", line: "publications", dateLabel: "Jan 2026", date: "2026-01", title: "Co-author, Int J Mol Sci", subtitle: "Co-authored the chapter “Genetic and Molecular Basis of Lynch Syndrome” and created a figure using BioRender", description: `<p>Hereditary Endometrial Cancer: Lynch Syndrome, Mismatch Repair Deficiency, and Emerging Genetic Predispositions—A Comprehensive Review with Clinical and Laboratory Guidelines</p><p><a href="https://doi.org/10.3390/ijms27031304" target="_blank">doi:10.3390/ijms27031304</a></p>`, image: "img/lynch.jpg" },
     { id: "pub-breast", line: "publications", dateLabel: "Feb 2026", date: "2026-02", title: "Co-author, Pharmaceutics", subtitle: "Prepared chapters on Immunosuppressive vs. Immunostimulatory Factors, developed figures using BioRender", description: `<p>Breaking Barriers: Immune Checkpoint Inhibitors in Breast Cancer</p><p><a href="https://doi.org/10.3390/pharmaceutics18010034" target="_blank">doi:10.3390/pharmaceutics18010034</a></p>`, image: "img/tme.jpg" },
-    { id: "pub-ajcp", line: "publications", dateLabel: "Mar 2026", date: "2026-03", title: "Author, Am J Clin Pathol", subtitle: "Derived an AJCP-concordant formula for marrow normocellularity based on published data", description: `<p>Beyond the “100-age” rule: an AJCP-concordant formula for marrow normocellularity</p><p>Manuscript accepted</p>`, image: null },
+    { id: "pub-ajcp", line: "publications", dateLabel: "May 2026", date: "2026-05", title: "Author, Am J Clin Pathol", subtitle: "Derived an AJCP-concordant formula for marrow normocellularity based on published data", description: `<p>Beyond the “100-age” rule: an AJCP-concordant formula for marrow normocellularity</p><p><a href="https://academic.oup.com/ajcp/article-abstract/165/5/aqag039/8689503?redirectedFrom=fulltext" target="_blank">academic.oup.com/ajcp/article-abstract/165/5/aqag039/8689503</a></p>`, image: null },
 
     // ==========================================
     // Konferencje
@@ -47,9 +47,8 @@ const portfolioData = [
     { id: "course-hemato-malignant", line: "courses", dateLabel: "Jan 2026", date: "2026-01", title: "Malignant Entities in Blood & Bone Marrow", subtitle: "", description: `<p></p>`, image: "img/malignant_entities_in_blood_and_bone_marrow.jpg" }
 ];
 
-
 // ==========================================
-// INICJALIZACJA STRONY (ZBIORCZY BLOK)
+// INICJALIZACJA STRONY
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -70,8 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 3. LOGIKA RYSOWANIA MAPY OSI CZASU ---
-    
-    // Konwersja dat dla punktów na mapie
     portfolioData.forEach(item => {
         if (item.date) {
             const d = new Date(item.date + "-01");
@@ -91,12 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!container) return;
 
     const categoryConfig = {
-        education: { color: '#1d3557' },    // Głęboki granatowy
-        internships: { color: '#0077b6' },  // Wyrazisty niebieski
-        work: { color: '#2a9d8f' },         // Morski/Teal
-        publications: { color: '#8338ec' }, // Fioletowy
-        conferences: { color: '#e63946' },  // Czerwony (akcent strony)
-        courses: { color: '#f4a261' }       // Ciepły pomarańczowy
+        education: { color: '#1d3557' },
+        internships: { color: '#0077b6' },
+        work: { color: '#2a9d8f' },
+        publications: { color: '#8338ec' },
+        conferences: { color: '#e63946' },
+        courses: { color: '#f4a261' }
     };
 
     const MAIN_AXIS_Y = 480; 
@@ -105,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const pixelsPerYear = 400; 
     const minTimeDistance = 90;
 
-    // Generowanie globalnej osi czasu
     let allTimePoints = [];
     portfolioData.forEach(item => {
         if(item.timestamp) allTimePoints.push(item.timestamp);
@@ -152,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const finalWidth = maxFiniteX + paddingEnd;
 
-    // Rysowanie znaczników lat na osi głównej
     for (let y = startYear; y <= currentYear; y++) {
         const yearX = timeToX[y];
         const yearLine = document.createElement('div');
@@ -167,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(yearLabel);
     }
 
-    // Znacznik "Today"
     const todayX = timeToX[currentTimestamp];
     
     const todayLine = document.createElement('div');
@@ -195,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
     svgOverlay.id = 'subway-svg';
     container.appendChild(svgOverlay);
 
-    // Rysowanie poszczególnych "stacji" na mapie
     portfolioData.forEach((item) => {
         const category = categoryConfig[item.line];
         if(!category || !item.timestamp) return;
@@ -227,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             curveW = Math.max((endX - startX) / 2, 10); 
         }
 
-        // Rysowanie wektorowych krzywych odchodzących od osi
         let pathD = `M ${startX} ${mainY} `; 
         pathD += `C ${startX + curveW/2} ${mainY}, ${startX + curveW/2} ${laneY}, ${startX + curveW} ${laneY} `; 
 
@@ -299,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
         stationWrapper.appendChild(label);
         container.appendChild(stationWrapper);
 
-        // Obsługa kliknięcia (otwieranie okna modalnego)
         stationWrapper.addEventListener('click', () => {
             if (isDragging) return;
             document.getElementById('modal-date').textContent = item.dateLabel;
@@ -321,11 +312,10 @@ document.addEventListener('DOMContentLoaded', () => {
     container.style.minWidth = `${finalWidth}px`;
     svgOverlay.style.width = `${finalWidth}px`;
 
-    // Zamykanie okna modalnego
     closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
 
-    // --- 4. DRAG & SCROLL (Przesuwanie mapy myszką) ---
+    // --- 4. DRAG & SCROLL ---
     let isDown = false, mouseStartX, scrollLeft;
     wrapper.addEventListener('mousedown', (e) => {
         isDown = true; isDragging = false; 
@@ -343,7 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
         wrapper.scrollLeft = scrollLeft - ((x - mouseStartX) * 1.5); 
     });
 
-    // Przewijanie mapy do końca na start
     const startObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
             wrapper.scrollLeft = wrapper.scrollWidth;
@@ -351,5 +340,99 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     startObserver.observe(wrapper);
+
+    // ==========================================
+    // GENEROWANIE CV (NATYWNY SILNIK PDF PRZEGLĄDARKI)
+    // Bezpieczna, bezbłędna metoda ignorująca wady macOS
+    // ==========================================
+    const downloadBtn = document.getElementById('download-cv-btn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Usuń stary kontener, jeśli istnieje (np. po poprzednim drukowaniu)
+            const existing = document.getElementById('native-cv-print');
+            if (existing) existing.remove();
+
+            // Funkcja budująca czysty, bezpieczny HTML
+            const buildSection = (title, categoryName) => {
+                const items = portfolioData.filter(d => d.line === categoryName);
+                if (items.length === 0) return '';
+                
+                let html = `
+                    <div style="border-bottom: 1px solid #ddd; padding-bottom: 3px; margin-top: 15px; margin-bottom: 10px;">
+                        <h2 style="font-size: 14pt; color: #1d3557; margin: 0; text-transform: uppercase; font-family: Helvetica, Arial, sans-serif;">${title}</h2>
+                    </div>
+                `;
+                
+                items.forEach(item => {
+                    let cleanDesc = item.description.replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br><br>/g, '<br>');
+                    cleanDesc = cleanDesc.replace(/^(<br>)+|(<br>)+$/g, '');
+                    
+                    html += `
+                    <div style="margin-bottom: 15px; page-break-inside: avoid; font-family: Helvetica, Arial, sans-serif;">
+                        <div style="position: relative; margin-bottom: 2px;">
+                            <div style="font-weight: bold; font-size: 11pt; color: #333; padding-right: 150px;">${item.title}</div>
+                            <div style="position: absolute; right: 0; top: 0; font-size: 10pt; color: #777; font-weight: bold;">${item.dateLabel}</div>
+                        </div>
+                        <div style="font-style: italic; font-size: 10.5pt; color: #555; margin-bottom: 4px;">${item.subtitle}</div>
+                        <div style="font-size: 10pt; color: #444; line-height: 1.4;">${cleanDesc}</div>
+                    </div>`;
+                });
+                return html;
+            };
+
+            // Główny kontener Twojego CV
+            const cvContainer = document.createElement('div');
+            cvContainer.id = 'native-cv-print';
+            cvContainer.innerHTML = `
+                <div style="color: #333; font-family: Helvetica, Arial, sans-serif;">
+                    <h1 style="font-size: 26pt; color: #1d3557; margin: 0 0 5px 0;">Jan Ślężak</h1>
+                    <div style="font-size: 13pt; color: #c5839b; font-weight: bold; margin-bottom: 15px;">Medical Student</div>
+                    <div style="font-size: 10pt; color: #555; margin-bottom: 20px; border-bottom: 2px solid #5286c4; padding-bottom: 10px;">
+                        Email: janslezak@bijoupath.com | LinkedIn: jan-ślężak-46602b1b8 | ORCID: 0009-0006-1777-213X
+                    </div>
+                    ${buildSection('Education', 'education')}
+                    ${buildSection('Work Experience', 'work')}
+                    ${buildSection('Internships', 'internships')}
+                    ${buildSection('Publications', 'publications')}
+                    ${buildSection('Conferences', 'conferences')}
+                    ${buildSection('Courses', 'courses')}
+                </div>
+            `;
+
+            // Wstrzykujemy reguły CSS zabezpieczające widok
+            let style = document.getElementById('print-css');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'print-css';
+                style.innerHTML = `
+                    /* Ukrywamy to na ekranie monitora */
+                    @media screen {
+                        #native-cv-print { display: none !important; }
+                    }
+                    /* Pokazujemy tylko ten element przy próbie generowania PDF/druku */
+                    @media print {
+                        body > *:not(#native-cv-print) { display: none !important; }
+                        body { background: white; margin: 0; padding: 0; }
+                        #native-cv-print { 
+                            display: block !important; 
+                            position: absolute; 
+                            left: 0; 
+                            top: 0; 
+                            width: 100%; 
+                        }
+                        @page { margin: 15mm; size: A4 portrait; }
+                        a { color: #5286c4; text-decoration: none; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            document.body.appendChild(cvContainer);
+
+            window.print();
+        });
+    }
 
 });
