@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const MAIN_AXIS_Y = 480; 
     const paddingStart = 60; 
-    const paddingEnd = 120;   
+    const paddingEnd = 290;
     const pixelsPerYear = 400; 
     const minTimeDistance = 90;
 
