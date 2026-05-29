@@ -45,7 +45,7 @@ const portfolioData = [
     { id: "course-hemato-benign", line: "courses", dateLabel: "Dec 2025", date: "2025-12", title: "Benign Entities in Blood and Bone Marrow", subtitle: "", description: `<p></p>`, image: "img/benign_entities_in_blood_and_bone_marow.jpg" },
     { id: "course-gu-path", line: "courses", dateLabel: "Jan 2026", date: "2026-01", title: "Prostate and Seminal Vesicles", subtitle: "", description: `<p></p>`, image: "img/prostate_and_seminal_vesicles.jpg" },
     { id: "course-hemato-malignant", line: "courses", dateLabel: "Jan 2026", date: "2026-01", title: "Malignant Entities in Blood & Bone Marrow", subtitle: "", description: `<p></p>`, image: "img/malignant_entities_in_blood_and_bone_marrow.jpg" },
-    { id: "course-ai-fluency", line: "courses", dateLabel: "May 2026", date: "2026-05", title: "AI Fluency: Framework & Foundations", subtitle: "Anthropic", description: `<p></p>`, image: "img/ai_fluency_framework_and_foundations.jpg" }
+    { id: "course-ai-fluency", line: "courses", dateLabel: "May 2026", date: "2026-05", title: "AI Fluency: Framework & Foundations", subtitle: "", description: `<p></p>`, image: "img/ai_fluency_framework_and_foundations.jpg" }
 ];
 
 // ==========================================
