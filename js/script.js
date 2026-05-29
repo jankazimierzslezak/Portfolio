@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const MAIN_AXIS_Y = 480; 
     const paddingStart = 60; 
-    const paddingEnd = 290;
+    const paddingEnd = 110;
     const pixelsPerYear = 400; 
     const minTimeDistance = 90;
 
@@ -147,7 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (timeToX[ts] > maxFiniteX) maxFiniteX = timeToX[ts];
     });
 
-    const finalWidth = maxFiniteX + paddingEnd;
+    // "Today" is drawn as a clean right-hand boundary marker. Push it well past
+    // the last event so the newest entries' branch lines and labels (which extend
+    // to the RIGHT of their dot) never run into the Today line or badge.
+    const todayX = maxFiniteX + 300;
+
+    const finalWidth = todayX + paddingEnd;
 
     for (let y = startYear; y <= currentYear; y++) {
         const yearX = timeToX[y];
@@ -163,8 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(yearLabel);
     }
 
-    const todayX = timeToX[currentTimestamp];
-    
+    // todayX is computed above as a right-boundary marker
     const todayLine = document.createElement('div');
     todayLine.className = 'year-line';
     todayLine.style.left = `${todayX}px`;
