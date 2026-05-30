@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    @page { size: A4; margin: 15mm; background-color: #fafafa; }
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.4; font-size: 9.5pt; }
+    h1 { font-size: 24pt; color: #1d3557; margin: 0 0 5px 0; }
+    .subtitle { font-size: 11pt; color: #c5839b; font-weight: bold; margin-bottom: 12px; }
+    .contact { font-size: 8.5pt; color: #555; margin-bottom: 15px; border-bottom: 2px solid #5286c4; padding-bottom: 8px; }
+    h2 { font-size: 12pt; color: #1d3557; border-bottom: 1px solid #ddd; padding-bottom: 3px; margin-top: 12px; margin-bottom: 8px; text-transform: uppercase; }
+    .item { margin-bottom: 10px; page-break-inside: avoid; }
+    .item-header { display: table; width: 100%; margin-bottom: 2px; }
+    .item-title { display: table-cell; font-weight: bold; font-size: 10pt; color: #333; text-align: left; }
+    .item-date { display: table-cell; font-size: 9pt; color: #777; font-weight: bold; text-align: right; white-space: nowrap; }
+    .item-subtitle { font-style: italic; font-size: 9.5pt; color: #555; margin-bottom: 2px; }
+    .item-desc { font-size: 9pt; color: #444; }
+    .item-desc p { margin: 0 0 2px 0; }
+    ul { margin: 0; padding-left: 18px; font-size: 9pt; color: #444; }
+    li { margin-bottom: 2px; }
+    a { color: #5286c4; text-decoration: none; }
+</style>
+</head>
+<body>
+    <h1>{{ personal.name }}</h1>
+    <div class="subtitle">{{ personal.title }}</div>
+    <div class="contact">
+        Email: {{ personal.email }} | LinkedIn: {{ personal.linkedin }} | ORCID: {{ personal.orcid }}
+    </div>
+
+    {% for section in sections %}{% if section.entries %}
+    <h2>{{ section.title }}</h2>
+    {% for item in section.entries %}
+    <div class="item">
+        <div class="item-header"><span class="item-title">{{ item.title }}</span><span class="item-date">{{ item.dateLabel }}</span></div>
+        {% if item.subtitle %}<div class="item-subtitle">{{ item.subtitle }}</div>{% endif %}
+        {% if item.description and item.description != '<p></p>' %}<div class="item-desc">{{ item.description | safe }}</div>{% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}{% endfor %}
+</body>
+</html>

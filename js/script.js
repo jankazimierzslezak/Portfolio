@@ -1,57 +1,26 @@
-const portfolioData = [
-    // ==========================================
-    // Studia
-    // ==========================================
-    { id: "edu-pums", line: "education", dateLabel: "2020 - Present", date: "2020-10", title: "Faculty of Medicine", subtitle: "Poznan University of Medical Sciences", description: `<p></p>`, image: "img/pums.jpg" },
-
-    // ==========================================
-    // Staże
-    // ==========================================
-    { id: "intern-jonscher", line: "internships", dateLabel: "Jul 2024 - Apr 2025", date: "2024-07", endDate: "2025-04", title: "Dr. N. Retkowska-Tomaszewska's team", subtitle: "Neurosurgical ward, Jonscher Clinical Hospital", description: `<p>Clinical observership</p>`, image: "img/jonshera.jpg" },
-    { id: "intern-usk", line: "internships", dateLabel: "Jan 2025 - Present", date: "2025-01", title: "Prof. G. Dworacki’s team", subtitle: "Clinical Hospital of Poznan University of Medical Sciences", description: `<ul><li>Developing proficiency in microscopic review of bone marrow trephine biopsies (H&E, IHC)</li><li>Assisting with structuring pathology reports and co-developing a results reporting tool</li><li>Building foundational skills in flow cytometry and performing cell culture under supervision</li></ul>`, image: "img/usk.jpg" },
-    { id: "intern-medart", line: "internships", dateLabel: "Apr 2025 - Present", date: "2025-04", title: "MedART", subtitle: "Infertility Diagnosis and Treatment Center", description: `<ul><li>Training AI based to recognize CD138+, CD79a+, CD56+ and CD15+ cells</li><li>Archiving paraffin blocks, slides and scanning histopathology slides</li></ul>`, image: "img/medart.jpg" },
-
-    // ==========================================
-    // Praca
-    // ==========================================
-    { id: "work-wcp-1", line: "work", dateLabel: "Aug 2022 - Sep 2023", date: "2022-08", endDate: "2023-09", title: "Trainee Medical Assistant", subtitle: "Specialist Mother & Child Health Care Center", description: `<ul><li>Provided care for patients aged 0-3 years</li><li>Performed minor medical procedures</li></ul>`, image: "img/wcp.jpg" },
-    { id: "work-wcp-2", line: "work", dateLabel: "Aug 2023 - Nov 2024", date: "2023-09", endDate: "2024-11", title: "Medical Assistant", subtitle: "Specialist Mother & Child Health Care Center", description: `<ul><li>Assisted physicians during examinations</li><li>Prepared and reviewed medical documentation</li></ul>`, image: "img/wcp.jpg" },
-    { id: "work-consilio", line: "work", dateLabel: "Feb 2025 - Dec 2025", date: "2025-02", endDate: "2025-12", title: "Laboratory Assistant", subtitle: "Consilio Diagnostica Poznań", description: `<ul><li>Received instruction in microscopic review of pathology slides H&E and IHC</li><li>Performed macroscopic assessment</li><li>Assisted in histopathology slide preparation</li></ul>`, image: "img/logo_diagnostyka.png" },
-    
-    // ==========================================
-    // Publikacje
-    // ==========================================
-    { id: "pub-cells", line: "publications", dateLabel: "Mar 2023", date: "2023-03", title: "Co-author, Genes", subtitle: "Performed supervised cell culture of MCF7, MDA-MB-231, and SK-BR-3", description: `<p>Doxorubicin and Cisplatin Modulate miR-21, miR-106, miR-126, miR-155 and miR-199 Levels in MCF7, MDA-MB-231 and SK-BR-3 Cells That Makes Them Potential Elements of the DNA-Damaging Drug Treatment Response Monitoring in Breast Cancer Cells—A Preliminary Study</p><p><a href="https://doi.org/10.3390/genes14030702" target="_blank">doi:10.3390/genes14030702</a></p>`, image: null },
-    { id: "pub-ibd", line: "publications", dateLabel: "Oct 2024", date: "2024-10", title: "Co-author, Contemp. Pharm.", subtitle: "Prepared the chapter: Introduction and Inflammatory bowel diseases and fatty liver", description: `<p>Metabolic and cardiovascular disorders in patients with inflammatory bowel diseases</p><p><a href="https://doi.org/10.53139/FW.20241718" target="_blank">doi:10.53139/FW.20241718</a></p>`, image: null },
-    { id: "pub-lynch", line: "publications", dateLabel: "Jan 2026", date: "2026-01", title: "Co-author, Int J Mol Sci", subtitle: "Co-authored the chapter “Genetic and Molecular Basis of Lynch Syndrome” and created a figure using BioRender", description: `<p>Hereditary Endometrial Cancer: Lynch Syndrome, Mismatch Repair Deficiency, and Emerging Genetic Predispositions—A Comprehensive Review with Clinical and Laboratory Guidelines</p><p><a href="https://doi.org/10.3390/ijms27031304" target="_blank">doi:10.3390/ijms27031304</a></p>`, image: "img/lynch.jpg" },
-    { id: "pub-breast", line: "publications", dateLabel: "Feb 2026", date: "2026-02", title: "Co-author, Pharmaceutics", subtitle: "Prepared chapters on Immunosuppressive vs. Immunostimulatory Factors, developed figures using BioRender", description: `<p>Breaking Barriers: Immune Checkpoint Inhibitors in Breast Cancer</p><p><a href="https://doi.org/10.3390/pharmaceutics18010034" target="_blank">doi:10.3390/pharmaceutics18010034</a></p>`, image: "img/tme.jpg" },
-    { id: "pub-ajcp", line: "publications", dateLabel: "May 2026", date: "2026-05", title: "Author, Am J Clin Pathol", subtitle: "Derived an AJCP-concordant formula for marrow normocellularity based on published data", description: `<p>Beyond the “100-age” rule: an AJCP-concordant formula for marrow normocellularity</p><p><a href="https://academic.oup.com/ajcp/article-abstract/165/5/aqag039/8689503?redirectedFrom=fulltext" target="_blank">academic.oup.com/ajcp/article-abstract/165/5/aqag039/8689503</a></p>`, image: null },
-
-    // ==========================================
-    // Konferencje
-    // ==========================================
-    { id: "conf-ostrow-7", line: "conferences", dateLabel: "Nov 2023", date: "2023-11", title: "7th Greater Poland Meeting of Pediatric Surgeons", subtitle: "Oral Presentation", description: `<p>CSMD3 gene c.1075G>T variant in two children aged 3 and 7.</p>`, image: "img/7_ostrow.jpg" },
-    { id: "conf-scalpellum-3", line: "conferences", dateLabel: "May 2024", date: "2024-05", title: "SCALPELLUM: 3rd National Student Conference", subtitle: "Oral Presentation", description: `<p>Vomiting in infants as a potential sign of brain disorders: a case report.</p>`, image: "img/3_scalpellum.jpg" },
-    { id: "conf-hospital", line: "conferences", dateLabel: "Sep 2024", date: "2024-09", title: "“Hospital Challenge” Conference", subtitle: "Attendee", description: `<p>Specialist Mother & Child Health Care Center, Poznań.</p>`, image: null },
-    { id: "conf-ostrow-8", line: "conferences", dateLabel: "Nov 2024", date: "2024-11", title: "8th Greater Poland Meeting of Pediatric Surgeons", subtitle: "Oral Presentation", description: `<p>Rare case of arteriovenous malformation in a newborn.</p>`, image: "img/8_ostrow.jpg" },
-    { id: "conf-neuro", line: "conferences", dateLabel: "Dec 2024", date: "2024-12", title: "Neurooncology, Greater Poland Days", subtitle: "Co-author of oral presentation", description: `<p>Modern approaches to the treatment of diffuse gliomas: therapeutic strategies for grade I, III, and IV tumors.</p>`, image: null },
-    { id: "conf-scalpellum-4", line: "conferences", dateLabel: "Apr 2025", date: "2025-04", title: "SCALPELLUM: 4th National Student Conference", subtitle: "Oral Presentation", description: `<p>Abusive Head Trauma in an Infant - Diagnostic Significance of Ocular Fundus Examination: A Case Report.</p>`, image: "img/4_scalpellum.jpg" },
-    { id: "conf-bluezones", line: "conferences", dateLabel: "May 2025", date: "2025-05", title: "Lifestyle Medicine for Longevity, Blue Zones", subtitle: "Volunteered", description: `<p>Volunteered at the international conference in Poznań.</p>`, image: null },
-    { id: "conf-escca", line: "conferences", dateLabel: "Sep 2025", date: "2025-09", title: "ESCCA Conference, Montpellier", subtitle: "Poster Presentation", description: `<p>How does flow cytometry of cerebrospinal fluid and peripheral blood help diagnose primary CNS lymphoma.</p>`, image: null },
-
-    // ==========================================
-    // Kursy
-    // ==========================================
-    { id: "course-hemato-benign", line: "courses", dateLabel: "Dec 2025", date: "2025-12", title: "Benign Entities in Blood and Bone Marrow", subtitle: "", description: `<p></p>`, image: "img/benign_entities_in_blood_and_bone_marow.jpg" },
-    { id: "course-gu-path", line: "courses", dateLabel: "Jan 2026", date: "2026-01", title: "Prostate and Seminal Vesicles", subtitle: "", description: `<p></p>`, image: "img/prostate_and_seminal_vesicles.jpg" },
-    { id: "course-hemato-malignant", line: "courses", dateLabel: "Jan 2026", date: "2026-01", title: "Malignant Entities in Blood & Bone Marrow", subtitle: "", description: `<p></p>`, image: "img/malignant_entities_in_blood_and_bone_marrow.jpg" },
-    { id: "course-ai-fluency", line: "courses", dateLabel: "May 2026", date: "2026-05", title: "AI Fluency: Framework & Foundations", subtitle: "", description: `<p></p>`, image: "img/ai_fluency_framework_and_foundations.jpg" }
-];
-
 // ==========================================
-// INICJALIZACJA STRONY
+// DANE PORTFOLIO
+// Źródło prawdy: data.json (wspólne ze stroną i generatorem CV w tools/cv-generator).
+// Dodanie wpisu w data.json aktualizuje i tę stronę, i generowany PDF.
 // ==========================================
+let portfolioData = [];
+
 document.addEventListener('DOMContentLoaded', () => {
+    fetch('data.json')
+        .then((response) => {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+        })
+        .then((data) => {
+            portfolioData = data.entries;
+            initPortfolio();
+        })
+        .catch((err) => {
+            console.error('Nie udało się wczytać data.json:', err);
+        });
+});
+
+function initPortfolio() {
 
     // --- 1. EFEKT KURTYNY I ANIMACJE STARTOWE ---
     document.body.classList.add('tabbed-view');
@@ -345,99 +314,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     startObserver.observe(wrapper);
-
-    // ==========================================
-    // GENEROWANIE CV (NATYWNY SILNIK PDF PRZEGLĄDARKI)
-    // Bezpieczna, bezbłędna metoda ignorująca wady macOS
-    // ==========================================
-    const downloadBtn = document.getElementById('download-cv-btn');
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            // Usuń stary kontener, jeśli istnieje (np. po poprzednim drukowaniu)
-            const existing = document.getElementById('native-cv-print');
-            if (existing) existing.remove();
-
-            // Funkcja budująca czysty, bezpieczny HTML
-            const buildSection = (title, categoryName) => {
-                const items = portfolioData.filter(d => d.line === categoryName);
-                if (items.length === 0) return '';
-                
-                let html = `
-                    <div style="border-bottom: 1px solid #ddd; padding-bottom: 3px; margin-top: 15px; margin-bottom: 10px;">
-                        <h2 style="font-size: 14pt; color: #1d3557; margin: 0; text-transform: uppercase; font-family: Helvetica, Arial, sans-serif;">${title}</h2>
-                    </div>
-                `;
-                
-                items.forEach(item => {
-                    let cleanDesc = item.description.replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br><br>/g, '<br>');
-                    cleanDesc = cleanDesc.replace(/^(<br>)+|(<br>)+$/g, '');
-                    
-                    html += `
-                    <div style="margin-bottom: 15px; page-break-inside: avoid; font-family: Helvetica, Arial, sans-serif;">
-                        <div style="position: relative; margin-bottom: 2px;">
-                            <div style="font-weight: bold; font-size: 11pt; color: #333; padding-right: 150px;">${item.title}</div>
-                            <div style="position: absolute; right: 0; top: 0; font-size: 10pt; color: #777; font-weight: bold;">${item.dateLabel}</div>
-                        </div>
-                        <div style="font-style: italic; font-size: 10.5pt; color: #555; margin-bottom: 4px;">${item.subtitle}</div>
-                        <div style="font-size: 10pt; color: #444; line-height: 1.4;">${cleanDesc}</div>
-                    </div>`;
-                });
-                return html;
-            };
-
-            // Główny kontener Twojego CV
-            const cvContainer = document.createElement('div');
-            cvContainer.id = 'native-cv-print';
-            cvContainer.innerHTML = `
-                <div style="color: #333; font-family: Helvetica, Arial, sans-serif;">
-                    <h1 style="font-size: 26pt; color: #1d3557; margin: 0 0 5px 0;">Jan Ślężak</h1>
-                    <div style="font-size: 13pt; color: #c5839b; font-weight: bold; margin-bottom: 15px;">Medical Student</div>
-                    <div style="font-size: 10pt; color: #555; margin-bottom: 20px; border-bottom: 2px solid #5286c4; padding-bottom: 10px;">
-                        Email: janslezak@bijoupath.com | LinkedIn: jan-ślężak-46602b1b8 | ORCID: 0009-0006-1777-213X
-                    </div>
-                    ${buildSection('Education', 'education')}
-                    ${buildSection('Work Experience', 'work')}
-                    ${buildSection('Internships', 'internships')}
-                    ${buildSection('Publications', 'publications')}
-                    ${buildSection('Conferences', 'conferences')}
-                    ${buildSection('Courses', 'courses')}
-                </div>
-            `;
-
-            // Wstrzykujemy reguły CSS zabezpieczające widok
-            let style = document.getElementById('print-css');
-            if (!style) {
-                style = document.createElement('style');
-                style.id = 'print-css';
-                style.innerHTML = `
-                    /* Ukrywamy to na ekranie monitora */
-                    @media screen {
-                        #native-cv-print { display: none !important; }
-                    }
-                    /* Pokazujemy tylko ten element przy próbie generowania PDF/druku */
-                    @media print {
-                        body > *:not(#native-cv-print) { display: none !important; }
-                        body { background: white; margin: 0; padding: 0; }
-                        #native-cv-print { 
-                            display: block !important; 
-                            position: absolute; 
-                            left: 0; 
-                            top: 0; 
-                            width: 100%; 
-                        }
-                        @page { margin: 15mm; size: A4 portrait; }
-                        a { color: #5286c4; text-decoration: none; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-
-            document.body.appendChild(cvContainer);
-
-            window.print();
-        });
-    }
-
-});
+}

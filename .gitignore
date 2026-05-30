@@ -3,3 +3,10 @@
 
 # Claude Code (local tooling, not part of the published site)
 .claude/
+
+# Generated CV preview (the PDF is built in CI from data.json)
+tools/cv-generator/podglad_cv.html
+
+# Python
+__pycache__/
+*.pyc

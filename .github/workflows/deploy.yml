@@ -1,0 +1,57 @@
+name: Build & Deploy
+
+# Buduje PDF CV z data.json (na Linuksie WeasyPrint instaluje się bez problemu)
+# i publikuje całą stronę na GitHub Pages. Po edycji data.json wystarczy push.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install WeasyPrint system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libpango-1.0-0 libpangoft2-1.0-0 libpangocairo-1.0-0 \
+            libcairo2 libgdk-pixbuf-2.0-0 libffi-dev libharfbuzz0b libfontconfig1
+
+      - name: Install Python dependencies
+        run: pip install -r tools/cv-generator/requirements.txt
+
+      - name: Build CV PDF from data.json
+        run: python tools/cv-generator/build_cv.py
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
