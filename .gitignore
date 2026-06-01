@@ -10,3 +10,9 @@ tools/cv-generator/podglad_cv.html
 # Python
 __pycache__/
 *.pyc
+.venv/
+node_modules/
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
