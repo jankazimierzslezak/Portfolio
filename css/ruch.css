@@ -1,0 +1,67 @@
+/* =========================================
+   RUCH 2.0 — odsłanianie przy przewijaniu + wejście intro
+   Klasy „widoczne" (reveal.js, IntersectionObserver) i „gotowe" (reveal.js,
+   przy starcie) sterują przejściami. Zawsze honorujemy prefers-reduced-motion.
+   (Port z bijou-site; selektory hero przemapowane na intro portfolio.)
+========================================= */
+
+/* Odsłanianie treści przy wejściu w viewport; stagger rodzeństwa przez --i. */
+.odslon {
+    opacity: 0;
+    transform: translateY(var(--reveal-y));
+    transition:
+        opacity var(--dur-reveal) var(--ease-out-quart),
+        transform var(--dur-reveal) var(--ease-spring);
+    transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.odslon.widoczne {
+    opacity: 1;
+    transform: none;
+}
+
+/* Wejście intro przy starcie: kicker → tytuł → badge → zdjęcie (kaskada). */
+.portfolio-intro .etykieta-sekcji,
+.portfolio-intro__title,
+.portfolio-intro__badge,
+.portfolio-intro__image {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+        opacity var(--dur-reveal) var(--ease-out-quart),
+        transform var(--dur-reveal) var(--ease-spring);
+}
+
+html.gotowe .portfolio-intro .etykieta-sekcji,
+html.gotowe .portfolio-intro__title,
+html.gotowe .portfolio-intro__badge,
+html.gotowe .portfolio-intro__image {
+    opacity: 1;
+    transform: none;
+}
+
+html.gotowe .portfolio-intro .etykieta-sekcji {
+    transition-delay: 80ms;
+}
+html.gotowe .portfolio-intro__title {
+    transition-delay: 160ms;
+}
+html.gotowe .portfolio-intro__badge {
+    transition-delay: 300ms;
+}
+html.gotowe .portfolio-intro__image {
+    transition-delay: 400ms;
+}
+
+/* Fallback: użytkownik woli mniej ruchu — stany końcowe od razu, bez przejść. */
+@media (prefers-reduced-motion: reduce) {
+    .odslon,
+    .portfolio-intro .etykieta-sekcji,
+    .portfolio-intro__title,
+    .portfolio-intro__badge,
+    .portfolio-intro__image {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

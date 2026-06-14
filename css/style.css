@@ -1,5 +1,8 @@
 /* =========================================
-   BAZA STRONY (Z pliku base.css)
+   BAZA STRONY
+   Kolory/odstępy/typografia 2.0 z tokenów. Wartości w :root to FALLBACK —
+   kanon (głębsza eozyna/akcent + tryb ciemny body.dark) dostarcza
+   tokens-bijou.css, ładowany PO tym pliku (wygrywa kaskadą).
 ========================================= */
 
 *,
@@ -8,9 +11,10 @@
     box-sizing: border-box;
 }
 
-/* Wymusza pionowy suwak, co eliminuje skakanie strony na boki */
+/* Wymusza pionowy suwak (brak skakania) + płynne kotwice */
 html {
-    overflow-y: scroll; 
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 html, body {
@@ -19,26 +23,64 @@ html, body {
 }
 
 :root {
-    --ff-primary: 'Inter', 'Segoe UI', Arial, sans-serif;
+    /* 1. Fonty i typografia */
+    --ff-primary: "Inter", "Segoe UI", Arial, sans-serif;
     --ff-secondary: var(--ff-primary);
-    --fw-reg: 300;
-    --fw-bold: 800; 
-    --clr-light: #FCF8F9; 
-    --clr-dark: #3d314a;  
-    --clr-eosin: #c5839b; 
-    --clr-accent: #5286c4; 
-    --fs-h1: 3rem;
-    --fs-h2: 2.25rem;
+    --ff-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --fw-light: 300;
+    --fw-reg: 400;
+    --fw-med: 500;
+    --fw-semi: 600;
+    --fw-bold: 800;
+    --fs-h1: clamp(2.4rem, 5vw, 4.4rem);
+    --fs-h2: clamp(1.7rem, 3vw, 2.6rem);
     --fs-h3: 1.25rem;
-    --fs-body: 1.05rem; 
-    --bs: 0 8px 24px rgba(61, 49, 74, 0.08),
-          0 2px 8px rgba(61, 49, 74, 0.04);
+    --fs-lead: clamp(1.08rem, 1.4vw, 1.3rem);
+    --fs-body: 1.05rem;
+    --lh-display: 0.98;
+    --ls-display: -0.025em;
+
+    /* 2. Kolory (fallback; kanon nadpisuje tokens-bijou.css) */
+    --clr-light: #fcf8f9;
+    --clr-light-rgb: 252, 248, 249;
+    --clr-dark: #3d314a;
+    --clr-dark-rgb: 61, 49, 74;
+    --clr-eosin: #c5839b;
+    --clr-eosin-rgb: 197, 131, 155;
+    --clr-accent: #5286c4;
+    --clr-accent-rgb: 82, 134, 196;
+    --clr-danger: #c52c3c;
+    --clr-danger-rgb: 197, 44, 60;
+    --clr-on-color: #ffffff;
+    --clr-surface: #ffffff;
+    --clr-surface-rgb: 255, 255, 255;
+    --clr-muted: rgba(61, 49, 74, 0.7);
+    --clr-border: rgba(61, 49, 74, 0.1);
+    --clr-tint: rgba(197, 131, 155, 0.06);
+
+    /* 3. Cienie / obramowania / promienie */
+    --bs-sm: 0 4px 15px rgba(var(--clr-dark-rgb), 0.05);
+    --bs: 0 8px 24px rgba(var(--clr-dark-rgb), 0.08),
+          0 2px 8px rgba(var(--clr-dark-rgb), 0.04);
+    --bs-lg: 0 10px 25px rgba(var(--clr-dark-rgb), 0.12);
+    --border-subtle: 1px solid rgba(var(--clr-dark-rgb), 0.1);
+    --border-radius-card: 12px;
+
+    /* 4. Ruch */
+    --trans-fast: 0.2s ease;
+    --trans-base: 0.3s ease;
+    --trans-bounce: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-spring: cubic-bezier(0.22, 1.18, 0.36, 1);
+    --dur-fast: 180ms;
+    --dur-base: 320ms;
+    --dur-reveal: 850ms;
+    --reveal-y: 28px;
+    --hover-lift: -2px;
 }
 
 @media (min-width: 800px) {
     :root {
-        --fs-h1: 4.5rem;
-        --fs-h2: 3.75rem;
         --fs-h3: 1.5rem;
         --fs-body: 1.125rem;
     }
@@ -49,22 +91,26 @@ body {
     color: var(--clr-dark);
     margin: 0;
     font-family: var(--ff-primary);
+    font-weight: var(--fw-reg);
     font-size: var(--fs-body);
-    line-height: 1.7; 
+    line-height: 1.7;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-section {
-    padding: 3em 2em;
+/* Ujednolicony focus dla elementów interaktywnych */
+:focus-visible {
+    outline: 3px solid var(--clr-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 
 img {
     display: block;
     max-width: 100%;
-    height: auto; 
-    border-radius: 8px; 
+    height: auto;
+    border-radius: 8px;
 }
 
 strong {
@@ -75,15 +121,27 @@ h1, h2, h3 {
     line-height: 1.1;
     margin: 0;
     color: var(--clr-dark);
+    text-wrap: balance;
 }
 
 h1 { font-size: var(--fs-h1); }
 h2 { font-size: var(--fs-h2); }
 h3 { font-size: var(--fs-h3); }
 
+/* Nagłówek display: Fraunces Light, akcentowe słowo kursywą w eozynie. */
 .title {
-    margin-bottom: .25em;
-    font-weight: 600;
+    margin-bottom: 0.25em;
+    font-family: var(--ff-display);
+    font-weight: var(--fw-light);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-display);
+    letter-spacing: var(--ls-display);
+}
+
+.title em {
+    font-style: italic;
+    font-weight: var(--fw-med);
+    color: var(--clr-eosin);
 }
 
 .title::after {
@@ -97,9 +155,26 @@ h3 { font-size: var(--fs-h3); }
     border-radius: 3px;
 }
 
+/* Wyrównanie ikon FontAwesome do tekstu */
+i.fas, i.fab, i.far {
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+}
+
 .section {
     max-width: 1280px;
     margin: 0 auto;
+    padding: 3em 2em;
+}
+
+.section--full-width {
+    max-width: 100%;
+    width: 100%;
+    padding-top: 2em;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
 }
 
 .body {
@@ -115,7 +190,7 @@ h3 { font-size: var(--fs-h3); }
 }
 
 .item p {
-    margin: 0 0 0.35rem; 
+    margin: 0 0 0.35rem;
 }
 
 .item ul {
@@ -131,61 +206,114 @@ h3 { font-size: var(--fs-h3); }
     margin-bottom: 0;
 }
 
+/* =========================================
+   NAGŁÓWEK (znak + przełącznik motywu)
+========================================= */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5em;
+    background: rgba(var(--clr-light-rgb), 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.6em 2em;
+    width: 100%;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--trans-base);
+}
+
+/* Dolna krawędź pojawia się po przewinięciu (klasę dokłada reveal.js). */
+header.przewinieta {
+    border-bottom-color: var(--clr-border);
+}
+
+@media (max-width: 700px) {
+    header {
+        padding: 0.6em 1em;
+        gap: 0.75em;
+    }
+}
 
 /* =========================================
-   UKŁAD WIZYTÓWKI (Z pliku layout.css)
+   INTRO / HERO 2.0 (wizytówka)
 ========================================= */
-
-.home_img {
-    box-shadow: var(--bs);
-    border-radius: 8px;
-}
-
-/* USTAWIENIA SEKCJI PORTFOLIO (FULL WIDTH)  */
-#portfolio.section {
-    max-width: 100% !important;
-    width: 100%;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    margin: 0 !important;
-}
-
-/* WIZYTÓWKA */
 .portfolio-intro {
-    max-width: 1000px; 
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 0 auto 4rem;
     padding: 0 2rem;
 }
 
-.interview { font-weight: 200; }
-.interview strong { display: block; font-weight: 700; }
-.portfolio-intro .interview { grid-area: title; }
+.portfolio-intro__title {
+    margin: 0.35em 0 0.6em;
+    font-family: var(--ff-display);
+    font-weight: var(--fw-light);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-display);
+    letter-spacing: var(--ls-display);
+    color: var(--clr-dark);
+    text-wrap: balance;
+}
 
-.role {
-    padding: .35em 1.2em;
-    font-family: var(--ff-secondary);
-    margin-bottom: 1em;
-    background: var(--clr-eosin);
-    color: #fff;
+.portfolio-intro__title em {
+    display: block;
+    font-style: italic;
+    font-weight: var(--fw-med);
+    color: var(--clr-eosin);
+}
+
+.portfolio-intro__badge {
     display: inline-block;
-    border-radius: 6px; 
-    font-weight: 500; 
-    letter-spacing: 0.5px; 
-    box-shadow: 0 4px 10px rgba(197, 131, 155, 0.25);
+    margin: 0;
+    padding: 0.35em 1.2em;
+    background: var(--clr-eosin);
+    color: var(--clr-on-color);
+    border-radius: 6px;
+    font-family: var(--ff-secondary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(var(--clr-eosin-rgb), 0.25);
+}
+
+.portfolio-intro__image {
+    /* PNG to wycięta postać (przezroczyste tło) — bez ramki/karty. drop-shadow
+       idzie po SYLWETCE (nie po prostokącie), więc wyróżnia „jego", a nie kwadrat.
+       Kolor z tokenu --clr-dark-rgb flipuje z motywem: jasny → ciemny cień,
+       ciemny → jasna poświata (czytelny w obu trybach). */
+    max-width: 100%;
+    height: auto;
+    border-radius: 0;
+    filter: drop-shadow(0 8px 20px rgba(var(--clr-dark-rgb), 0.28));
+}
+
+/* W trybie ciemnym --clr-dark-rgb flipuje na jasny, a jasna poświata na ciemnym
+   tle „świeci" mocniej niż ciemny cień na jasnym — przy 0.28 robił się z tego
+   nimb. Ściszamy alfę i blur: zostaje subtelna obwódka odcinająca sylwetkę od
+   tła, bez efektu „świętego". */
+body.dark .portfolio-intro__image {
+    filter: drop-shadow(0 6px 14px rgba(var(--clr-dark-rgb), 0.12));
 }
 
 @media (min-width: 600px) {
     .portfolio-intro {
+        display: grid;
         align-items: center;
         width: fit-content;
-        margin: 0 auto;
-        column-gap: 3em; 
-        grid-template-areas: "title img" "subtitle img";
+        column-gap: 3em;
         grid-template-columns: minmax(0, 1fr) 280px;
-        display: grid;
+        grid-template-areas:
+            "title img"
+            "badge img";
     }
 
-    .home_img {
+    .portfolio-intro__title {
+        grid-area: title;
+    }
+
+    .portfolio-intro__image {
         grid-area: img;
         width: 280px;
         min-width: 280px;
@@ -193,8 +321,10 @@ h3 { font-size: var(--fs-h3); }
         z-index: 2;
     }
 
-    .role {
-        grid-area: subtitle;
+    /* Plakietka roli wsuwa się POD zdjęcie: rozciąga się na obie kolumny,
+       a zdjęcie (z-index 2) nachodzi na jej prawy koniec. */
+    .portfolio-intro__badge {
+        grid-area: badge;
         grid-column: 1 / -1;
         grid-row: 2;
         align-self: start;
@@ -206,12 +336,14 @@ h3 { font-size: var(--fs-h3); }
     }
 }
 
-/* WHAT I DO */
+/* =========================================
+   „WHAT I DO" — sekcja na zdjęciu szpiku
+   Biel celowo „gołe": leży na zdjęciu z ciemną nakładką i NIE flipuje z motywem.
+========================================= */
 .portfolio-activities {
-    width: 100%; 
-    padding-top: 4em;
-    padding-bottom: 4em; 
-    /* POPRAWIONA ŚCIEŻKA DO ZDJĘCIA W TLE: */
+    width: 100%;
+    padding: 2.5em 2em 4em;
+    margin-bottom: 0;
     background-image: url("../img/section_of_bone_marrow_tissue_prussian_blue_stain.jpg");
     background-size: cover;
     background-position: center;
@@ -224,80 +356,124 @@ h3 { font-size: var(--fs-h3); }
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(61, 49, 74, 0.7); 
+    background: rgba(61, 49, 74, 0.72);
 }
 
-.portfolio-activities > * { position: relative; z-index: 1; }
-.portfolio-activities .title { color: #fff; }
-.portfolio-activities .title::after { margin: 0.35em auto 0.75em; background: var(--clr-eosin); opacity: 0.9; }
+.portfolio-activities > * {
+    position: relative;
+    z-index: 1;
+}
+
+.portfolio-activities .title {
+    color: #fff;
+    /* Większy niż domyślne --fs-h2 — nagłówek banera ma być mocniejszy. */
+    font-size: clamp(2.1rem, 4vw, 3.4rem);
+}
+
+.portfolio-activities .title::after {
+    margin: 0.35em auto 0.75em;
+    background: var(--clr-eosin);
+    opacity: 0.9;
+}
 
 .portfolio-activities .body {
     margin: 1.5em auto 0;
     display: grid;
-    grid-template-columns: 1fr; 
-    gap: 2rem; 
+    grid-template-columns: 1fr;
+    gap: 2rem;
     padding: 0 1.5rem;
     max-width: 500px;
 }
 
 .portfolio-activities .item {
-    background: rgba(255, 255, 255, 0.05); 
+    background: rgba(255, 255, 255, 0.06);
     padding: 1.5rem;
-    border-radius: 8px;
-    backdrop-filter: blur(4px); 
-    margin: 0; 
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    margin: 0;
     display: flex;
     flex-direction: column;
 }
 
 .portfolio-activities .item h3 {
-    display: flex; align-items: center; justify-content: center;
-    line-height: 1.2; min-height: 2.2em; margin-bottom: 0.5em;
-    text-align: center; color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    min-height: 2.2em;
+    margin-bottom: 0.5em;
+    text-align: center;
+    color: #fff;
 }
 
-.portfolio-activities .item p { 
-    margin-top: 0; 
-    color: rgba(255, 255, 255, 0.9); 
+.portfolio-activities .item p {
+    margin-top: 0;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 @media (min-width: 800px) {
     .portfolio-activities .body {
         grid-template-columns: repeat(3, 1fr);
-        max-width: 1200px; 
+        max-width: 1200px;
         padding: 0 2rem;
     }
 }
 
-
 /* =========================================
-   MAPA OSI CZASU (Z pliku portfolio.css)
+   MAPA OSI CZASU (subway) — token-aware (działa w dark)
 ========================================= */
+.portfolio-timeline-wrapper {
+    position: relative;
+    width: 100%;
+}
 
-.subway-wrapper {
+/* Oś czasu przypięta do ekranu (JS dodaje .tl-active, gdy ruch dozwolony):
+   zjazd w dół przewija mapę w poziomie. Wysokość toru ustawia JS = ekran +
+   pozioma droga przewijania. Bez .tl-active (fallback / reduced-motion) —
+   zwykłe przewijanie w bok (drag / palec / kółko). */
+.tl-sticky {
+    width: 100%;
+}
+
+.tl-active .tl-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.tl-stage {
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 0;
-    margin-bottom: 0 !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
     cursor: grab;
-    scrollbar-width: none; 
     user-select: none;
     -webkit-user-select: none;
 }
 
-.subway-wrapper:active { cursor: grabbing; }
+.tl-stage:active { cursor: grabbing; }
+.tl-stage::-webkit-scrollbar { display: none; }
 
-.subway-wrapper::-webkit-scrollbar { display: none; }
+.tl-active .tl-stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: max-content;
+    overflow: visible;
+    cursor: default;
+    transform-origin: 0 0;
+    will-change: transform;
+}
 
 .subway-container {
     position: relative;
     height: 960px;
-    margin: 0 40px;
+    margin: 0;
     transition: min-width 0.3s;
 }
 
-/* GŁÓWNA OŚ METRA */
 .subway-line {
     position: absolute;
     left: 0;
@@ -305,240 +481,357 @@ h3 { font-size: var(--fs-h3); }
     height: 6px;
     border-radius: 4px;
     opacity: 0.8;
-    top: 480px; 
-    background-color: #d1d5db; 
+    top: 480px;
+    background-color: rgba(var(--clr-dark-rgb), 0.2);
 }
 
-/* WEKTOROWE ODNOGI */
 #subway-svg {
     position: absolute;
-    top: 0; left: 0; height: 100%;
-    pointer-events: none; 
-    z-index: 5; 
+    top: 0;
+    left: 0;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
 }
 
 .station-segment-path {
     fill: none;
-    stroke-width: 6px; 
-    stroke-linecap: round; 
-    stroke-linejoin: round; 
+    stroke-width: 6px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     opacity: 0.7;
     transition: opacity 0.2s ease, filter 0.2s ease, stroke-width 0.2s ease;
 }
 
 .station-segment-path.is-active {
     opacity: 1;
-    stroke-width: 8px; 
-    filter: drop-shadow(0 2px 6px currentColor) brightness(1.1); 
+    stroke-width: 8px;
+    filter: drop-shadow(0 2px 6px currentColor) brightness(1.1);
 }
 
-/* STRUKTURA */
 .station-wrapper {
     position: absolute;
-    width: 0; height: 0; 
+    width: 0;
+    height: 0;
     z-index: 10;
 }
 
 .station-wrapper:hover { z-index: 20; }
+
+.station-wrapper:focus-visible {
+    outline: none;
+    z-index: 30;
+}
 
 .station-dot {
     position: absolute;
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: var(--clr-surface, #fff);
     border: 4px solid;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     transform: translate(-50%, -50%);
     transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 }
 
-.station-wrapper:hover .station-dot {
+.station-wrapper:hover .station-dot,
+.station-wrapper:focus-visible .station-dot {
     transform: translate(-50%, -50%) scale(1.2);
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8), 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .station-label {
     position: absolute;
     width: 180px;
-    white-space: normal; 
+    white-space: normal;
     font-size: 0.8rem;
     line-height: 1.4;
     font-weight: 600;
     color: var(--clr-dark);
-    text-align: left; 
+    text-align: left;
     transform: translate(0, -50%);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(var(--clr-surface-rgb), 0.95);
     backdrop-filter: blur(4px);
     padding: 8px 12px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    box-shadow: var(--bs-sm);
     cursor: pointer;
 }
 
-.station-wrapper:hover .station-label { 
-    color: #000; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
-    transform: translate(0, -50%) scale(1.05); 
+.station-wrapper:hover .station-label,
+.station-wrapper:focus-visible .station-label {
+    color: var(--clr-dark);
+    box-shadow: var(--bs);
+    transform: translate(0, -50%) scale(1.05);
 }
 
-/* MODAL */
-.modal-overlay { 
-    display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.6); z-index: 9999; backdrop-filter: blur(3px); 
-    justify-content: center; align-items: center; padding: 20px; 
+.station-date-badge {
+    display: inline-block;
+    background: var(--clr-tint);
+    border: 1px solid var(--clr-border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-bottom: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--clr-muted);
 }
-.modal-content { 
-    background: #fff; width: 100%; max-width: 600px; max-height: 90vh; 
-    overflow-y: auto; border-radius: 12px; padding: 2rem; position: relative; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: modalFadeIn 0.3s ease-out; 
+
+.station-title-text {
+    color: var(--clr-dark);
 }
-@keyframes modalFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #888; transition: color 0.2s; }
-.close-modal:hover { color: #d74b4b; }
-.modal-badge { display: inline-block; background: var(--clr-accent); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; }
-.modal-header h3 { margin: 0 0 0.2rem 0; font-size: 1.5rem; }
-.modal-header h4 { margin: 0 0 1.5rem 0; font-size: 1rem; color: #666; font-weight: 400; }
+
+/* =========================================
+   MODAL (natywny <dialog>)
+========================================= */
+.modal-overlay {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 600px;
+    width: 90%;
+    margin: auto;
+    overflow: visible;
+}
+
+.modal-overlay::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: var(--clr-surface, #fff);
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: var(--border-radius-card, 12px);
+    padding: 2rem;
+    position: relative;
+    box-shadow: var(--bs-lg);
+    animation: modalFadeIn 0.3s ease-out;
+    scroll-behavior: smooth;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--clr-muted);
+    transition: color 0.2s;
+    background: transparent;
+    border: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-modal:hover { color: var(--clr-eosin); }
+
+.close-modal:focus-visible {
+    outline: 2px solid var(--clr-accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.modal-badge {
+    display: inline-block;
+    background: var(--clr-accent);
+    color: var(--clr-on-color, #fff);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.modal-content .modal-header h2,
+.modal-content .modal-header h3 {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.modal-header h3 {
+    color: var(--clr-muted);
+    font-weight: 400;
+}
+
+#modal-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-text p {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
 .modal-text ul { padding-left: 20px; }
 .modal-text li { margin-bottom: 8px; }
 
-/* PIONOWE LINIE LAT (TŁO OSI) */
+.modal-img {
+    display: none;
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+/* =========================================
+   PIONOWE LINIE LAT (tło osi)
+========================================= */
 .year-line {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    /* Celowo daleko poza kontener (960px) — po przeskalowaniu sceny i tak są
+       przycinane przez .tl-sticky (overflow:hidden), więc dosięgają sekcji „What
+       I do" u góry i dołu kadru przy każdej skali (koniec z przerwą u góry). */
+    top: -1500px;
+    bottom: -1500px;
     width: 2px;
-    background-color: #f3f4f6; 
-    z-index: 1; 
-    border-left: 1px dashed #d1d5db; 
+    background-color: rgba(var(--clr-dark-rgb), 0.05);
+    z-index: 1;
+    border-left: 1px dashed rgba(var(--clr-dark-rgb), 0.1);
+}
+
+.year-line--today {
+    background-color: var(--clr-eosin);
+    width: 3px;
+    opacity: 0.3;
+    z-index: 3;
+    border-left: none;
 }
 
 .year-label {
     position: absolute;
-    top: 50px; 
+    top: 50px;
     transform: translateX(-50%);
-    color: #9ca3af;
+    color: rgba(var(--clr-dark-rgb), 0.4);
     font-weight: 700;
     font-size: 1.2rem;
     z-index: 2;
-    background: #fafafa; 
+    background: var(--clr-light);
     padding: 2px 8px;
     border-radius: 4px;
 }
 
-/* ELIMINACJA PUSTEJ PRZESTRZENI NAD STOPKĄ */
-#portfolio.section{
-    padding-bottom: 0 !important;
+.year-label--today {
+    background-color: var(--clr-eosin);
+    color: var(--clr-on-color, #fff);
+    opacity: 1;
+    z-index: 4;
+    transform: translateX(-50%) translateY(-10px);
+    box-shadow: var(--bs-sm);
+}
+
+/* Sekcja portfolio dochodzi do stopki bez pustej przestrzeni */
+#portfolio {
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* =========================================
-   STOPKA (FOOTER)
+   STOPKA
 ========================================= */
 .footer {
-    background: var(--clr-dark); 
-    color: #e8e4e8; 
+    background: var(--clr-dark);
+    color: #e8e4e8;
     text-align: center;
-    padding: 3em 0; 
-    font-size: var(--fs-h3); 
+    padding: 3em 0;
+    font-size: var(--fs-h3);
     margin-top: auto;
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1.5em;
 }
 
-.footer a { 
-    color: inherit; 
-    text-decoration: none; 
-    transition: color 0.3s ease, transform 0.2s ease; 
+/* W trybie ciemnym --clr-dark robi się jasny — stopka zostaje ciemna (surface). */
+body.dark .footer {
+    background: var(--clr-surface);
 }
 
-.footer__link { 
-    font-weight: 600; 
+.footer a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.footer__link:hover, 
-.social-list__link:hover { 
-    color: var(--clr-accent); 
+.footer__link {
+    font-weight: 600;
 }
 
-.footer__date { 
-    font-size: 0.85rem; 
-    margin: 0; 
-    opacity: 0.7; 
+.footer__link:hover,
+.social-list__link:hover {
+    color: var(--clr-accent);
 }
 
-.footer__meta { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 0.4em; 
+.footer__date {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.7;
 }
 
-.social-list { 
-    list-style: none; 
-    display: flex; 
-    justify-content: center; 
-    flex-wrap: wrap; 
-    row-gap: 1rem; 
-    margin: 0 auto; 
-    padding: 0; 
+.footer__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
 }
 
-@media (max-width: 600px) { 
-    .social-list { max-width: 240px; } 
+.social-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    margin: 0 auto;
+    padding: 0;
 }
 
-.social-list__item { 
-    margin: 0 .75em; 
+@media (max-width: 600px) {
+    .social-list { max-width: 240px; }
 }
 
-.social-list__link { 
-    padding: .5em; 
-    display: inline-block; 
-    transition: transform 0.2s; 
+.social-list__item {
+    margin: 0 0.75em;
 }
 
-.social-list__link:hover { 
-    transform: translateY(-3px); 
+.social-list__link {
+    padding: 0.5em;
+    display: inline-block;
+    transition: transform 0.2s;
 }
 
-.fa-orcid { 
-    font-size: 1.1em; 
-    vertical-align: middle; 
+.social-list__link:hover {
+    transform: translateY(-3px);
+}
+
+.fa-orcid {
+    font-size: 1.1em;
+    vertical-align: middle;
 }
 
 /* =========================================
-   ANIMACJE STARTOWE I EFEKT KURTYNY
+   START STRONY — „kurtyna" (anti-FOUC)
+   Ukrywamy stronę tylko gdy JS działa (html.js); reveal.js dokłada is-ready.
+   Wjazd intro (html.gotowe) i odsłanianie (.odslon) są w ruch.css.
 ========================================= */
-
-/* 1. Strona ukryta przed załadowaniem (opacity: 0) */
-html:not(.is-ready) body { 
-    opacity: 0; 
+html.js:not(.is-ready) body {
+    opacity: 0;
 }
 
-/* 2. Płynne pokazanie po dodaniu klasy .is-ready */
-html.is-ready body { 
-    opacity: 1; 
-    transition: opacity 0.6s ease-in-out; 
-}
-
-/* 3. Animacja wjazdu tekstu z dołu do góry */
-@keyframes fadeAndSlideUp {
-    from { 
-        opacity: 0; 
-        transform: translateY(15px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
-
-/* 4. Zastosowanie animacji wjazdu na aktywnej sekcji */
-body.tabbed-view .section.is-active { 
-    animation: fadeAndSlideUp 0.1s ease-out forwards; 
+html.is-ready body {
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out;
 }

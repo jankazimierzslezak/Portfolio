@@ -1,0 +1,85 @@
+/* =========================================
+   ZNAK MARKI „Bijou." 2.0 + etykieta sekcji + przełącznik motywu
+   Wspólny język wizualny ekosystemu (hub/stats/fc/site): gruba Fraunces,
+   kończąca kropka w eozynie. Tokeny z tokens-bijou.css (@bijou/tokens).
+========================================= */
+
+/* — Znak w pasku nawigacji (logo-link do góry) — */
+.znak {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: 1.4rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--clr-dark);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--trans-fast);
+}
+
+/* Kropka marki w eozynie — treść znaku to samo „Bijou" (kropkę dokłada ::after). */
+.znak::after {
+    content: ".";
+    color: var(--clr-eosin);
+}
+
+.znak:hover {
+    color: var(--clr-eosin);
+}
+
+/* — Etykieta sekcji (kicker): uppercase + eozynowa kreska 28×2px przed tekstem — */
+.etykieta-sekcji {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: var(--fw-semi);
+    color: var(--clr-muted);
+}
+
+.etykieta-sekcji::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--clr-eosin);
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+/* — Przełącznik motywu Jasny/Ciemny (wzór .seg z @bijou/tokens / .motywSeg huba) — */
+.motyw-seg {
+    display: inline-flex;
+    flex-shrink: 0;
+    background: var(--clr-light);
+    border: 1px solid var(--clr-border);
+    border-radius: 999px;
+    padding: 4px;
+}
+
+.motyw-seg__btn {
+    padding: 6px 14px;
+    border: none;
+    background: transparent;
+    color: var(--clr-muted);
+    font-size: 0.72rem;
+    font-weight: var(--fw-semi);
+    font-family: inherit;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: color var(--trans-fast), background-color var(--trans-fast);
+}
+
+.motyw-seg__btn:hover:not(.motyw-seg__btn--aktywny) {
+    color: var(--clr-dark);
+}
+
+/* Aktywny segment = inwersja (jasny w ciemnym motywie, ciemny w jasnym) — jak hub. */
+.motyw-seg__btn--aktywny {
+    background: var(--clr-dark);
+    color: var(--clr-on-color);
+}

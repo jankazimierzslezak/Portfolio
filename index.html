@@ -1,105 +1,156 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>BijouPath</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous"/>  
-    
+
+    <meta name="description" content="Portfolio of Jan Ślężak — medical student focused on hematopathology, bone marrow assessment and AI in pathology.">
+    <meta name="author" content="Jan Ślężak">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bijoupath.com/">
+    <meta property="og:title" content="BijouPath">
+    <meta property="og:description" content="Portfolio of Jan Ślężak — medical student, hematopathology.">
+    <meta property="og:image" content="/img/favicon.png">
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,800;1,9..144,300;1,9..144,500;1,9..144,800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
+    <!-- Kanoniczne tokeny 2.0 (kopia z @bijou/tokens); po style.css, żeby wygrać kaskadą -->
+    <link rel="stylesheet" href="css/tokens-bijou.css">
+    <link rel="stylesheet" href="css/znak.css">
+    <link rel="stylesheet" href="css/ruch.css">
 
     <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <link rel="preload" as="image" href="img/janslezak.png">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"
+            integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 </head>
 <body>
 
-    <section class="section is-active" id="portfolio">
-        
-        <div class="portfolio-intro" style="margin-top: 2rem; margin-bottom: 4rem;">
-            <h1 class="interview">
-                Hi, I am <strong>Jan Ślężak</strong>
-            </h1>
-            <p class="role">Medical Student</p>
-            
-            <img src="img/janslezak.png" alt="Jan Ślężak" class="home_img" width="280" height="420" style="max-width: 100%; height: auto;">
+    <script>
+      // Tryb ciemny (body.dark) z localStorage / preferencji systemu PRZED renderem
+      // — bez mignięcia. Pełna obsługa przełącznika: js/motyw.js.
+      // Klasa html.js włącza „kurtynę" (anti-FOUC) tylko przy aktywnym JS.
+      (function () {
+        document.documentElement.classList.add("js");
+        try {
+          var z = localStorage.getItem("bijou.motyw");
+          if (z === "ciemny" || (!z && matchMedia("(prefers-color-scheme: dark)").matches)) {
+            document.body.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <header>
+        <a href="#" class="znak" aria-label="BijouPath — home">Bijou</a>
+        <div class="motyw-seg" role="group" aria-label="Theme">
+            <button type="button" class="motyw-seg__btn" data-motyw="jasny" aria-pressed="true">Light</button>
+            <button type="button" class="motyw-seg__btn" data-motyw="ciemny" aria-pressed="false">Dark</button>
+        </div>
+    </header>
+
+    <main>
+    <section class="section section--full-width" id="portfolio">
+
+        <div class="portfolio-intro">
+            <h1 class="portfolio-intro__title">Hi, I am <em>Jan Ślężak</em></h1>
+            <p class="portfolio-intro__badge">Medical Student</p>
+
+            <img src="img/janslezak.png" alt="Jan Ślężak" class="portfolio-intro__image" width="280" height="420" loading="lazy">
         </div>
 
-        <div class="portfolio-activities" style="margin-bottom: 0;">
-            <h2 class="title">What I do</h2>
+        <section class="portfolio-activities">
+            <h2 class="title portfolio-activities__title">What I do</h2>
             <div class="body">
-                <article class="item">
+                <article class="item odslon" style="--i: 0">
                     <h3>Bone Marrow Assessment</h3>
                     <p>Pre-screening bone marrow trephine biopsies, assisting with pathology reports and developing practical skills in histopathology slide review using H&E and immunohistochemistry.</p>
                 </article>
-                <article class="item">
+                <article class="item odslon" style="--i: 1">
                     <h3>AI Annotation</h3>
                     <p>Annotating CD138-positive plasma cells, CD79a-positive B cells, CD56-positive natural killer cells and CD15+ myeloid cells on scanned histopathology slides, with a focus on artificial intelligence support in pathology.</p>
                 </article>
-                <article class="item">
+                <article class="item odslon" style="--i: 2">
                     <h3>Writing</h3>
                     <p>Contributing to research projects, preparing manuscript sections, creating scientific figures and presenting work at conferences in pathology and clinical medicine.</p>
                 </article>
             </div>
-        </div>
+        </section>
 
-        <div style="position: relative; width: 100%;">
-            
-            <div class="subway-wrapper" id="subway-wrapper">
-                <div class="subway-container" id="subway-container">
-                    <div class="subway-line"></div>
+        <div class="portfolio-timeline-wrapper" id="tl-track">
+
+            <div class="tl-sticky" id="tl-sticky">
+                <div class="tl-stage" id="tl-stage" role="region" aria-label="Interactive timeline of experience and education">
+                    <div class="subway-container" id="subway-container">
+                        <div class="subway-line"></div>
+                    </div>
                 </div>
             </div>
 
-            <div id="station-modal" class="modal-overlay">
+            <dialog id="station-modal" class="modal-overlay" aria-labelledby="modal-title">
                 <div class="modal-content">
-                    <span class="close-modal" id="close-modal">&times;</span>
+                    <button type="button" class="close-modal" id="close-modal" aria-label="Close modal">&times;</button>
                     <div class="modal-header">
                         <span id="modal-date" class="modal-badge"></span>
-                        <h3 id="modal-title"></h3>
-                        <h4 id="modal-subtitle"></h4>
+                        <h2 id="modal-title"></h2>
+                        <h3 id="modal-subtitle"></h3>
                     </div>
                     <div class="modal-body">
                         <div id="modal-desc" class="modal-text"></div>
-                        <img id="modal-img" src="" alt="Detail image" style="display: none; max-width: 100%; border-radius: 8px; margin-top: 1rem;">
+                        <img id="modal-img" alt="Detail image" class="modal-img" loading="lazy">
                     </div>
                 </div>
-            </div>
+            </dialog>
 
         </div>
     </section>
+    </main>
 
     <footer class="footer">
         <a href="mailto:janslezak@bijoupath.com" class="footer__link">janslezak@bijoupath.com</a>
-        
+
         <ul class="social-list">
             <li class="social-list__item">
                 <a href="Jan_Slezak_CV.pdf" download="Jan_Slezak_CV.pdf" class="social-list__link" title="Download CV (PDF)">
                     <i class="fas fa-file-pdf" aria-hidden="true"></i>
                 </a>
             </li>
-            
+
             <li class="social-list__item">
-                <a class="social-list__link" href="https://www.linkedin.com/in/jan-%C5%9Bl%C4%99%C5%BCak-46602b1b8/" target="_blank" aria-label="Mój profil na LinkedIn">
+                <a class="social-list__link" href="https://www.linkedin.com/in/jan-%C5%9Bl%C4%99%C5%BCak-46602b1b8/" target="_blank" rel="noopener noreferrer" aria-label="Mój profil na LinkedIn">
                     <i class="fab fa-linkedin" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="social-list__item">
-                <a class="social-list__link" href="https://www.facebook.com/jan.slezak3/?locale=pl_PL" target="_blank" aria-label="Mój profil na Facebooku">
+                <a class="social-list__link" href="https://www.facebook.com/jan.slezak3/?locale=pl_PL" target="_blank" rel="noopener noreferrer" aria-label="Mój profil na Facebooku">
                     <i class="fab fa-facebook-f" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="social-list__item">
-                <a class="social-list__link" href="https://www.instagram.com/jan_slezak_/" target="_blank" aria-label="Mój profil na Instagramie">
+                <a class="social-list__link" href="https://www.instagram.com/jan_slezak_/" target="_blank" rel="noopener noreferrer" aria-label="Mój profil na Instagramie">
                     <i class="fab fa-instagram" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="social-list__item">
-                <a class="social-list__link" href="https://orcid.org/0009-0006-1777-213X" target="_blank" title="ORCID Profile" aria-label="Mój profil naukowy ORCID">
+                <a class="social-list__link" href="https://orcid.org/0009-0006-1777-213X" target="_blank" rel="noopener noreferrer" title="ORCID Profile" aria-label="Mój profil naukowy ORCID">
                     <i class="fab fa-orcid" aria-hidden="true"></i>
                 </a>
             </li>
             <li class="social-list__item">
-                <a class="social-list__link" href="https://github.com/jankazimierzslezak" target="_blank" aria-label="Mój profil na GitHubie">
+                <a class="social-list__link" href="https://github.com/jankazimierzslezak" target="_blank" rel="noopener noreferrer" aria-label="Mój profil na GitHubie">
                     <i class="fab fa-github" aria-hidden="true"></i>
                 </a>
             </li>
@@ -112,5 +163,7 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script src="js/motyw.js"></script>
+    <script src="js/reveal.js"></script>
 </body>
 </html>

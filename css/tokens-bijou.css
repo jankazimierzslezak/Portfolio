@@ -1,0 +1,83 @@
+/* Kanoniczne tokeny marki i designu 2.0 (z @bijou/tokens w prywatnym monorepo bijou).
+   To repo jest publiczne i nie linkuje @bijou/tokens — trzymamy świadomą KOPIĘ
+   (jak `make sync-tokens` w bijou-site). Ładowany PO style.css — wygrywa kaskadą,
+   a `:root` w style.css zostaje fallbackiem, gdyby tego pliku zabrakło.
+   Motyw ciemny: klasa body.dark (przełącznik „Jasny/Ciemny"). */
+
+:root {
+    --clr-light: #fcf8f9;
+    --clr-light-rgb: 252, 248, 249;
+    --clr-dark: #3d314a;
+    --clr-dark-rgb: 61, 49, 74;
+    --clr-eosin: #a8587a;
+    --clr-eosin-rgb: 168, 88, 122;
+    --clr-accent: #3f6da8;
+    --clr-accent-rgb: 63, 109, 168;
+    --clr-danger: #c25450;
+    --clr-danger-rgb: 194, 84, 80;
+    --clr-on-color: #ffffff;
+    --clr-on-color-rgb: 255, 255, 255;
+    --clr-surface: #ffffff;
+    --clr-surface-rgb: 255, 255, 255;
+    --clr-paper: #faf6f7;
+    --clr-paper-rgb: 250, 246, 247;
+    --clr-muted: rgba(61, 49, 74, 0.7);
+    --clr-border: rgba(61, 49, 74, 0.1);
+    --clr-subtle: rgba(61, 49, 74, 0.08);
+    --clr-tint: rgba(168, 88, 122, 0.04);
+    --shadow-paper: 0 1px 2px rgba(61, 49, 74, 0.04), 0 12px 28px rgba(61, 49, 74, 0.05);
+    --shadow-float: 0 1px 2px rgba(61, 49, 74, 0.05), 0 6px 16px rgba(61, 49, 74, 0.06), 0 24px 48px rgba(61, 49, 74, 0.07);
+    --shadow-eosin: 0 4px 14px rgba(168, 88, 122, 0.25);
+    --shadow-accent: 0 4px 14px rgba(63, 109, 168, 0.25);
+
+    /* — Tokeny wspólne 2.0 (rodzina/wagi fontu, skala display, ruch) — */
+    --ff-primary: "Inter", "Segoe UI", Arial, sans-serif;
+    --ff-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --ff-numeric: "Inter", ui-monospace, monospace;
+    --fw-light: 300;
+    --fw-reg: 400;
+    --fw-med: 500;
+    --fw-semi: 600;
+    --fw-bold: 800;
+    --fs-hero: clamp(3.4rem, 8.5vw, 8.2rem);
+    --fs-h1: clamp(2.4rem, 5vw, 4.4rem);
+    --fs-h2: clamp(1.7rem, 3vw, 2.6rem);
+    --fs-lead: clamp(1.08rem, 1.4vw, 1.3rem);
+    --lh-display: 0.98;
+    --ls-display: -0.025em;
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-spring: cubic-bezier(0.22, 1.18, 0.36, 1);
+    --dur-fast: 180ms;
+    --dur-base: 320ms;
+    --dur-slow: 600ms;
+    --dur-reveal: 850ms;
+    --reveal-y: 28px;
+    --hover-lift: -2px;
+}
+
+body.dark {
+    --clr-light: #1c1722;
+    --clr-light-rgb: 28, 23, 34;
+    --clr-dark: #f1e9ee;
+    --clr-dark-rgb: 241, 233, 238;
+    --clr-eosin: #d99cb3;
+    --clr-eosin-rgb: 217, 156, 179;
+    --clr-accent: #74a3da;
+    --clr-accent-rgb: 116, 163, 218;
+    --clr-danger: #d77573;
+    --clr-danger-rgb: 215, 117, 115;
+    --clr-on-color: #1c1722;
+    --clr-on-color-rgb: 28, 23, 34;
+    --clr-surface: #2a2333;
+    --clr-surface-rgb: 42, 35, 51;
+    --clr-paper: #322738;
+    --clr-paper-rgb: 50, 39, 56;
+    --clr-muted: rgba(241, 233, 238, 0.72);
+    --clr-border: rgba(241, 233, 238, 0.14);
+    --clr-subtle: rgba(241, 233, 238, 0.08);
+    --clr-tint: rgba(217, 156, 179, 0.06);
+    --shadow-paper: 0 1px 2px rgba(0, 0, 0, 0.25), 0 12px 28px rgba(0, 0, 0, 0.3);
+    --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.25), 0 6px 16px rgba(0, 0, 0, 0.3), 0 24px 48px rgba(0, 0, 0, 0.35);
+    --shadow-eosin: 0 4px 14px rgba(217, 156, 179, 0.35);
+    --shadow-accent: 0 4px 14px rgba(116, 163, 218, 0.35);
+}
