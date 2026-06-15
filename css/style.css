@@ -278,7 +278,9 @@ header.przewinieta {
 
 .portfolio-intro__badge {
     display: inline-block;
-    margin: 0;
+    /* Na mobile (układ kolumnowy) plakietka i zdjęcie szły stykiem — dajemy
+       oddech. Na desktopie pozycje ustala grid, więc tam margines zerujemy. */
+    margin: 0 0 2rem;
     padding: 0.35em 1.2em;
     background: var(--clr-eosin);
     color: var(--clr-on-color);
@@ -344,6 +346,7 @@ body.dark .portfolio-intro__image {
         z-index: 1;
         width: calc(100% + 20px);
         max-width: none;
+        margin: 0;
     }
 }
 
