@@ -238,6 +238,17 @@ header.przewinieta {
     }
 }
 
+/* Na ekranach dotykowych przypięty nagłówek rozmywałby oś przejeżdżającą pod nim
+   przy każdej klatce scrolla (kosztowny re-blur). Zdejmujemy blur i dajemy niemal
+   kryjące tło — taniej, a różnica wizualna znikoma. */
+@media (pointer: coarse) {
+    header {
+        background: rgba(var(--clr-light-rgb), 0.97);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
 /* =========================================
    INTRO / HERO 2.0 (wizytówka)
 ========================================= */
@@ -555,8 +566,10 @@ body.dark .portfolio-intro__image {
     text-align: left;
     transform: translate(0, -50%);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    background: rgba(var(--clr-surface-rgb), 0.95);
-    backdrop-filter: blur(4px);
+    /* Bez backdrop-filter: blur — 24 etykiety rozmywające tło wewnątrz
+       przesuwanej warstwy sceny zarzynały płynność scrolla na telefonie. Tło i tak
+       było prawie kryjące (0.95), więc dajemy pełne krycie — wizualnie bez różnicy. */
+    background: rgb(var(--clr-surface-rgb));
     padding: 8px 12px;
     border-radius: 8px;
     box-shadow: var(--bs-sm);
@@ -693,11 +706,13 @@ body.dark .portfolio-intro__image {
 ========================================= */
 .year-line {
     position: absolute;
-    /* Celowo daleko poza kontener (960px) — po przeskalowaniu sceny i tak są
-       przycinane przez .tl-sticky (overflow:hidden), więc dosięgają sekcji „What
-       I do" u góry i dołu kadru przy każdej skali (koniec z przerwą u góry). */
-    top: -1500px;
-    bottom: -1500px;
+    /* Celowo poza kontener (960px) — po przeskalowaniu sceny i tak są przycinane
+       przez .tl-sticky (overflow:hidden), więc dosięgają sekcji „What I do" u góry
+       i dołu kadru. Trzymamy zapas umiarkowany (±800), bo to one rozdymały warstwę
+       GPU sceny (~3960px wys.) i dokładały do zacinania na telefonie. Jeśli przy
+       maks. skali (1.8) pojawi się przerwa u góry/dołu — zwiększyć zapas. */
+    top: -800px;
+    bottom: -800px;
     width: 2px;
     background-color: rgba(var(--clr-dark-rgb), 0.05);
     z-index: 1;

@@ -555,8 +555,12 @@
             // przerwa (siatka nie dosięgała sekcji). Korekta na nagłówek narasta w
             // miarę wpinania sceny: pełne hH przy wpięciu (sticky.top≈0), mniej w
             // trakcie wjazdu (scena jeszcze nisko) — bez tego treść spadałaby o hH.
-            const stickyTop = stage.parentElement.getBoundingClientRect().top;
-            const headerClear = Math.max(0, hH - Math.max(0, stickyTop));
+            // stickyTop wyprowadzamy z już zmierzonego `top` zamiast drugiego
+            // getBoundingClientRect() (połowa wymuszonych reflow na klatkę): scena
+            // jest sticky;top:0, więc do wpięcia jej górna krawędź ≈ top toru, a po
+            // wpięciu = 0. Rozbieżność tylko przy progress≈1 (pomijalna).
+            const stickyTop = Math.max(0, top);
+            const headerClear = Math.max(0, hH - stickyTop);
             const panY = headerClear - contentTop * scale;
             stage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
         }
@@ -567,8 +571,23 @@
             requestAnimationFrame(() => { ticking = false; apply(); });
         }
 
+        // Na telefonie pokazanie/schowanie paska adresu zmienia tylko wysokość okna
+        // i wywołuje lawinę „resize". Pełny measure() (czyta dziesiątki prostokątów
+        // w contentBounds) w trakcie gestu = zacinanie i skoki skali. Na dotyku
+        // mierzymy ponownie WYŁĄCZNIE przy zmianie szerokości (orientacja); na
+        // desktopie mierzymy zawsze, ale z lekkim debounce.
+        const coarse = window.matchMedia('(pointer: coarse)').matches;
+        let lastW = window.innerWidth;
+        let resizeTimer = null;
+        function onResize() {
+            if (coarse && window.innerWidth === lastW) return;
+            lastW = window.innerWidth;
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(measure, 150);
+        }
+
         window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", measure, { passive: true });
+        window.addEventListener("resize", onResize, { passive: true });
         // Web-fonty zmieniają wysokość etykiet (zawijanie) — przemierz po ich
         // załadowaniu, żeby granice nie były liczone na zastępczym foncie.
         if (document.fonts && document.fonts.ready) {
