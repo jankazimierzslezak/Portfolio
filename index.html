@@ -112,7 +112,11 @@
                     </div>
                     <div class="modal-body">
                         <div id="modal-desc" class="modal-text"></div>
-                        <img id="modal-img" alt="Detail image" class="modal-img" loading="lazy">
+                        <!-- Bez loading="lazy": src ustawia JS dopiero po kliknięciu, a do czasu
+                             wczytania obraz jest display:none (w zamkniętym <dialog>). Lazy na
+                             ukrytym elemencie nigdy by go nie pobrał — onload nie odpala i okno
+                             zostaje puste. Obraz i tak ładuje się na żądanie, więc lazy nic nie daje. -->
+                        <img id="modal-img" alt="Detail image" class="modal-img">
                     </div>
                 </div>
             </dialog>
