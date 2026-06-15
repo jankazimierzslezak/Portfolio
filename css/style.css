@@ -303,7 +303,7 @@ header.przewinieta {
        margines plakietki nie działał, bo to element inline-block.
        Na desktopie układ ustala grid, więc tam margines zerujemy. */
     display: block;
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 /* W trybie ciemnym --clr-dark-rgb flipuje na jasny, a jasna poświata na ciemnym
