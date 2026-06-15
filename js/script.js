@@ -403,11 +403,22 @@
 
         const imgEl = document.getElementById('modal-img');
         if (item.image) {
-            imgEl.src = item.image; // ścieżki w data.json są relatywne (np. img/...)
-            imgEl.style.display = 'block';
-            // Zabezpieczenie przed brakującym obrazkiem z pliku z danymi
+            // Jeden <img> jest współdzielony przez wszystkie wpisy. Gdy tylko
+            // podmienimy src, element NADAL pokazuje poprzednio wczytany obrazek,
+            // dopóki nowy się nie pobierze — przy szybkim przełączaniu widać wtedy
+            // stary certyfikat zamiast właściwego. Dlatego chowamy go do czasu
+            // wczytania i pokazujemy dopiero w onload (a przy błędzie zostaje ukryty).
+            imgEl.alt = item.title ? `${item.title} — detail` : 'Detail image';
+            imgEl.style.display = 'none';
+            imgEl.onload = () => { imgEl.style.display = 'block'; };
             imgEl.onerror = () => { imgEl.style.display = 'none'; };
+            imgEl.src = item.image; // ścieżki w data.json są relatywne (np. img/...)
+            // Obraz z cache bywa „complete" od razu i nie odpala onload — wtedy
+            // pokazujemy ręcznie (dotyczy też ponownego kliknięcia w ten sam wpis,
+            // gdy src się nie zmienia i load się nie powtarza).
+            if (imgEl.complete && imgEl.naturalWidth > 0) imgEl.style.display = 'block';
         } else {
+            imgEl.removeAttribute('src');
             imgEl.style.display = 'none';
         }
 
