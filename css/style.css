@@ -278,9 +278,7 @@ header.przewinieta {
 
 .portfolio-intro__badge {
     display: inline-block;
-    /* Na mobile (układ kolumnowy) plakietka i zdjęcie szły stykiem — dajemy
-       oddech. Na desktopie pozycje ustala grid, więc tam margines zerujemy. */
-    margin: 0 0 2rem;
+    margin: 0;
     padding: 0.35em 1.2em;
     background: var(--clr-eosin);
     color: var(--clr-on-color);
@@ -300,6 +298,12 @@ header.przewinieta {
     height: auto;
     border-radius: 0;
     filter: drop-shadow(0 8px 20px rgba(var(--clr-dark-rgb), 0.28));
+    /* Na mobile (układ kolumnowy) plakietka „Medical Student" stykała się ze
+       zdjęciem. Zdjęcie jako blok z górnym marginesem daje pewny odstęp —
+       margines plakietki nie działał, bo to element inline-block.
+       Na desktopie układ ustala grid, więc tam margines zerujemy. */
+    display: block;
+    margin-top: 2rem;
 }
 
 /* W trybie ciemnym --clr-dark-rgb flipuje na jasny, a jasna poświata na ciemnym
@@ -332,6 +336,7 @@ body.dark .portfolio-intro__image {
         min-width: 280px;
         position: relative;
         z-index: 2;
+        margin-top: 0;
     }
 
     /* Plakietka roli wsuwa się POD zdjęcie: rozciąga się na obie kolumny,
@@ -346,7 +351,6 @@ body.dark .portfolio-intro__image {
         z-index: 1;
         width: calc(100% + 20px);
         max-width: none;
-        margin: 0;
     }
 }
 
