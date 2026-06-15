@@ -510,7 +510,11 @@
         let contentTop = 0;   // górna krawędź realnej treści (px mapy)
         let fitH = 1;         // wysokość treści + oddech (baza skalowania)
         let hH = 0;           // cache wysokości nagłówka (liczone w measure, nie co klatkę)
-        let ticking = false;
+        // Wygładzanie wjazdu/zjazdu osi: poziom mapy (panX) dociągamy lerpem do celu,
+        // żeby start i stop poziomego ruchu na granicach sekcji nie szarpały.
+        const SMOOTH = 0.18;  // subtelna bezwładność panX; ↓ = większy poślizg, ↑ = ostrzej
+        let curX = null;      // wygładzana pozioma pozycja mapy (null = jeszcze nieustawiona)
+        let rafId = 0;        // uchwyt pętli wygładzającej (0 = pętla śpi)
 
         function headerH() {
             return header ? header.offsetHeight : 0;
@@ -573,15 +577,15 @@
             refit();
         }
 
-        function apply() {
-            // hH (wysokość nagłówka) bierzemy z cache liczonego w measure() — bez
-            // odczytu offsetHeight co klatkę. Zostaje JEDEN odczyt layoutu na klatkę
-            // (getBoundingClientRect toru) + jeden zapis transformu.
+        // Cel ruchu z aktualnego scrolla — sama MATEMATYKA, bez zapisu do DOM.
+        // hH (wysokość nagłówka) bierzemy z cache liczonego w measure() — bez
+        // odczytu offsetHeight co klatkę. Zostaje JEDEN odczyt layoutu (rect toru).
+        function targets() {
             const top = track.getBoundingClientRect().top;
             const progress = maxShift > 0 ? Math.min(1, Math.max(0, -top / maxShift)) : 0;
             // Najnowsze u góry: start (góra) pokazuje prawy koniec mapy (Today),
             // a zjazd w dół jedzie w stronę 2020 (od najnowszych do najstarszych).
-            const panX = -(1 - progress) * maxShift;
+            const targetX = -(1 - progress) * maxShift;
             // Treść wyrównana do GÓRY (tuż pod nagłówkiem / sekcją „What I do"), nie
             // wyśrodkowana — inaczej slack/2 spychał oś w dół i u góry zostawała pusta
             // przerwa (siatka nie dosięgała sekcji). Korekta na nagłówek narasta w
@@ -594,13 +598,36 @@
             const stickyTop = Math.max(0, top);
             const headerClear = Math.max(0, hH - stickyTop);
             const panY = headerClear - contentTop * scale;
-            stage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+            return { targetX, panY };
+        }
+
+        // Jeden zapis transformu. Poziom (x) jest wygładzany, panY/scale bez laga.
+        function paint(x, panY) {
+            stage.style.transform = `translate(${x}px, ${panY}px) scale(${scale})`;
+        }
+
+        // Render bez animacji: pozycja = cel (init / refit / fonty) — żeby mapa nie
+        // „wjeżdżała" z boku przy starcie ani po zmianie wymiarów.
+        function apply() {
+            const t = targets();
+            curX = t.targetX;
+            paint(curX, t.panY);
+        }
+
+        // Pętla wygładzająca: curX dociąga do targetX i GAŚNIE po dojechaniu (nie
+        // kręci się w spoczynku). Dzięki lerpowi start/stop poziomego ruchu na
+        // granicach osi są miękkie — bez „pociągnięcia". panY zawsze świeże.
+        function tick() {
+            const t = targets();
+            if (curX === null) curX = t.targetX;
+            curX += (t.targetX - curX) * SMOOTH;
+            if (Math.abs(t.targetX - curX) < 0.1) curX = t.targetX;
+            paint(curX, t.panY);
+            rafId = curX !== t.targetX ? requestAnimationFrame(tick) : 0;
         }
 
         function onScroll() {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => { ticking = false; apply(); });
+            if (!rafId) rafId = requestAnimationFrame(tick);
         }
 
         // Na telefonie pokazanie/schowanie paska adresu zmienia tylko wysokość okna
