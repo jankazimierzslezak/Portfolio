@@ -495,6 +495,9 @@
         let contentTop = 0;   // górna krawędź realnej treści (px mapy)
         let fitH = 1;         // wysokość treści + oddech (baza skalowania)
         let ticking = false;
+        // Buforowane w measure(), żeby apply() (klatka scrolla) NIE czytał layoutu:
+        let headerHeight = 0; // header.offsetHeight — zmienia się tylko przy resize
+        let trackTop = 0;     // górna krawędź toru względem DOKUMENTU (nie viewportu)
 
         function headerH() {
             return header ? header.offsetHeight : 0;
@@ -528,7 +531,8 @@
 
         function measure() {
             const vw = window.innerWidth;
-            const availH = window.innerHeight - headerH();
+            headerHeight = headerH();                      // bufor na klatki scrolla
+            const availH = window.innerHeight - headerHeight;
             const mapW = container.offsetWidth;           // = finalWidth (min-width)
 
             const b = contentBounds();
@@ -540,12 +544,19 @@
             scale = Math.min(MAX_SCALE, availH / fitH);
             maxShift = Math.max(0, mapW * scale - vw);    // pozioma droga przewijania
             track.style.height = (window.innerHeight + maxShift) + "px";
+            // Pozycja toru względem dokumentu (po ustawieniu wysokości — własny top
+            // toru się od niej nie zmienia). W apply() odejmiemy tylko scrollY, więc
+            // klatka scrolla nie musi już wołać getBoundingClientRect().
+            trackTop = track.getBoundingClientRect().top + window.scrollY;
             apply();
         }
 
         function apply() {
-            const hH = headerH();
-            const top = track.getBoundingClientRect().top;
+            // top toru względem viewportu BEZ czytania layoutu: pozycja w dokumencie
+            // (bufor z measure) minus bieżący scroll. window.scrollY nie wymusza
+            // reflow, w przeciwieństwie do getBoundingClientRect()/offsetHeight, które
+            // przy każdej klatce zarzynały płynność na telefonie.
+            const top = trackTop - window.scrollY;
             const progress = maxShift > 0 ? Math.min(1, Math.max(0, -top / maxShift)) : 0;
             // Najnowsze u góry: start (góra) pokazuje prawy koniec mapy (Today),
             // a zjazd w dół jedzie w stronę 2020 (od najnowszych do najstarszych).
@@ -555,12 +566,11 @@
             // przerwa (siatka nie dosięgała sekcji). Korekta na nagłówek narasta w
             // miarę wpinania sceny: pełne hH przy wpięciu (sticky.top≈0), mniej w
             // trakcie wjazdu (scena jeszcze nisko) — bez tego treść spadałaby o hH.
-            // stickyTop wyprowadzamy z już zmierzonego `top` zamiast drugiego
-            // getBoundingClientRect() (połowa wymuszonych reflow na klatkę): scena
-            // jest sticky;top:0, więc do wpięcia jej górna krawędź ≈ top toru, a po
-            // wpięciu = 0. Rozbieżność tylko przy progress≈1 (pomijalna).
+            // stickyTop wyprowadzamy z `top` (scena jest sticky;top:0, więc do wpięcia
+            // jej górna krawędź ≈ top toru, a po wpięciu = 0). Rozbieżność tylko przy
+            // progress≈1 (pomijalna).
             const stickyTop = Math.max(0, top);
-            const headerClear = Math.max(0, hH - stickyTop);
+            const headerClear = Math.max(0, headerHeight - stickyTop);
             const panY = headerClear - contentTop * scale;
             stage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
         }
