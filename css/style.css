@@ -17,6 +17,27 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Lenis (płynny, inercyjny scroll) — reguły z oficjalnego lenis.css. Aktywne
+   tylko gdy js/plynnosc.js doda klasy .lenis; gdy Lenis nie wstanie, zostaje
+   natywny scroll-behavior: smooth powyżej (progresywne ulepszanie). */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+/* Gdy Lenis aktywny, gasimy natywny smooth, żeby oba się nie biły. */
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
 html, body {
     overflow-x: clip;
     width: 100%;
