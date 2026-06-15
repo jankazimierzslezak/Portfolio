@@ -69,7 +69,9 @@
             <h1 class="portfolio-intro__title">Hi, I am <em>Jan Ślężak</em></h1>
             <p class="portfolio-intro__badge">Medical Student</p>
 
-            <img src="img/janslezak.png" alt="Jan Ślężak" class="portfolio-intro__image" width="280" height="420" loading="lazy">
+            <!-- Wymiary zgodne z realnym plikiem (2724×2544 ≈ 280×262) — bez skoku layoutu.
+                 Brak loading="lazy": zdjęcie jest nad zgięciem i preloadowane (LCP). -->
+            <img src="img/janslezak.png" alt="Jan Ślężak" class="portfolio-intro__image" width="280" height="262">
         </div>
 
         <section class="portfolio-activities">

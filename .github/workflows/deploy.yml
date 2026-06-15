@@ -40,6 +40,15 @@ jobs:
       - name: Build CV PDF from data.json
         run: python tools/cv-generator/build_cv.py
 
+      # Cache-busting: domena stoi za Cloudflare z 4-godz. Browser Cache TTL, a linki
+      # css/js nie były wersjonowane — przeglądarki trzymały stary CSS i nie widziały
+      # poprawek. Doklejamy ?v=<krótki-SHA> do LOKALNYCH zasobów (linki CDN https:// nie
+      # pasują do wzorca). Każdy deploy = nowy URL = wymuszone świeże pobranie.
+      - name: Cache-busting zasobów (?v=<sha>)
+        run: |
+          V="${GITHUB_SHA::8}"
+          sed -i -E 's#(href="css/[^"?]+\.css)"#\1?v='"$V"'"#g; s#(src="js/[^"?]+\.js)"#\1?v='"$V"'"#g' index.html
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v5
         with:
