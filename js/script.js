@@ -485,9 +485,15 @@
 
         // Pionowy oddech nad i pod treścią (px w układzie mapy).
         const PAD = 20;
+        // Ekrany dotykowe: powiększanie sceny rozdyma kompozytowaną warstwę GPU
+        // (szer.×wys. rośnie ze skalą²) — przy presji pamięci przeglądarka kafelkuje
+        // i re-rasteryzuje ją w trakcie przesuwu, co szarpie scroll NAWET gdy efekt
+        // liczy kompozytor. Na dotyku trzymamy więc skalę przy 1.0 (oś i tak wypełnia
+        // szerokość); pełny zoom do 1.8 zostaje na desktopie.
+        const coarse = window.matchMedia('(pointer: coarse)').matches;
         // Górny limit powiększania na wysokich oknach (treść wypełnia wysokość, ale
         // nie rośnie w nieskończoność).
-        const MAX_SCALE = 1.8;
+        const MAX_SCALE = coarse ? 1.0 : 1.8;
         const header = document.querySelector('header');
 
         // Jeśli przeglądarka wspiera animacje sterowane scrollem (CSS
@@ -615,8 +621,7 @@
         // i wywołuje lawinę „resize". Pełny measure() (czyta dziesiątki prostokątów
         // w contentBounds) w trakcie gestu = zacinanie i skoki skali. Na dotyku
         // mierzymy ponownie WYŁĄCZNIE przy zmianie szerokości (orientacja); na
-        // desktopie mierzymy zawsze, ale z lekkim debounce.
-        const coarse = window.matchMedia('(pointer: coarse)').matches;
+        // desktopie mierzymy zawsze, ale z lekkim debounce. (coarse zdefiniowane wyżej.)
         let lastW = window.innerWidth;
         let resizeTimer = null;
         function onResize() {
