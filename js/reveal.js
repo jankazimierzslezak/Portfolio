@@ -17,8 +17,15 @@
 
   // Dolna krawędź nagłówka pojawia się po przewinięciu (klasa „przewinieta").
   var naglowek = document.querySelector("header");
+  var przewiniety = false;
   function naScroll() {
-    if (naglowek) naglowek.classList.toggle("przewinieta", window.scrollY > 24);
+    // Mutujemy klasę tylko przy przekroczeniu progu — handler biegnie na każde
+    // zdarzenie scrolla (bez rAF), więc trzymamy go maksymalnie tanim.
+    var stan = window.scrollY > 24;
+    if (naglowek && stan !== przewiniety) {
+      naglowek.classList.toggle("przewinieta", stan);
+      przewiniety = stan;
+    }
   }
   window.addEventListener("scroll", naScroll, { passive: true });
   naScroll();

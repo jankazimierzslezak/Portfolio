@@ -456,7 +456,8 @@ body.dark .portfolio-intro__image {
 .tl-active .tl-sticky {
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100vh;    /* fallback dla starych przeglądarek */
+    height: 100svh;   /* stabilne — nie skacze przy chowaniu/pokazywaniu paska adresu na telefonie */
     overflow: hidden;
 }
 
@@ -715,15 +716,23 @@ body.dark .portfolio-intro__image {
     position: absolute;
     /* Celowo poza kontener (960px) — po przeskalowaniu sceny i tak są przycinane
        przez .tl-sticky (overflow:hidden), więc dosięgają sekcji „What I do" u góry
-       i dołu kadru. Trzymamy zapas umiarkowany (±800), bo to one rozdymały warstwę
-       GPU sceny (~3960px wys.) i dokładały do zacinania na telefonie. Jeśli przy
-       maks. skali (1.8) pojawi się przerwa u góry/dołu — zwiększyć zapas. */
-    top: -800px;
-    bottom: -800px;
+       i dołu kadru. Zapas (--yl-overdraw) rozdyma warstwę GPU sceny, dlatego na dotyku
+       jest mniejszy (poniżej). Jeśli przy maks. skali pojawi się przerwa u góry/dołu
+       — zwiększyć wartość. */
+    --yl-overdraw: 800px;
+    top: calc(-1 * var(--yl-overdraw));
+    bottom: calc(-1 * var(--yl-overdraw));
     width: 2px;
     background-color: rgba(var(--clr-dark-rgb), 0.05);
     z-index: 1;
     border-left: 1px dashed rgba(var(--clr-dark-rgb), 0.1);
+}
+
+/* Na dotyku mniejszy zapas linii lat — mniejsza (tańsza) warstwa GPU sceny, mniej
+   zacięć scrolla. Bezpieczne, bo na coarse MAX_SCALE jest niżej (≤1.2), więc okno
+   widoczne (≈ vH/scale) i tak mieści się w tym zakresie. */
+@media (pointer: coarse) {
+    .year-line { --yl-overdraw: 400px; }
 }
 
 .year-line--today {

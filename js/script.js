@@ -485,15 +485,20 @@
 
         // Pionowy oddech nad i pod treścią (px w układzie mapy).
         const PAD = 20;
+        // Na dotyku scena (warstwa GPU) bywa wielka — nie powiększamy jej powyżej
+        // naturalnej skali, żeby nie obciążać telefonu. Na desktopie pełny zoom do 1.8.
+        const coarse = window.matchMedia('(pointer: coarse)').matches;
         // Górny limit powiększania na wysokich oknach (treść wypełnia wysokość, ale
         // nie rośnie w nieskończoność).
-        const MAX_SCALE = 1.8;
+        const MAX_SCALE = coarse ? 1.2 : 1.8;
         const header = document.querySelector('header');
+        const stickyEl = document.getElementById('tl-sticky');
 
         let scale = 1;
         let maxShift = 0;
         let contentTop = 0;   // górna krawędź realnej treści (px mapy)
         let fitH = 1;         // wysokość treści + oddech (baza skalowania)
+        let hH = 0;           // cache wysokości nagłówka (liczone w measure, nie co klatkę)
         let ticking = false;
 
         function headerH() {
@@ -527,8 +532,13 @@
         }
 
         function measure() {
+            hH = headerH();                                // cache na całą sesję scrolla
             const vw = window.innerWidth;
-            const availH = window.innerHeight - headerH();
+            // Wysokość przypięcia bierzemy z FAKTYCZNEJ wysokości .tl-sticky (CSS: 100svh),
+            // nie z window.innerHeight — inaczej JS i CSS liczyłyby inną wysokość i pan nie
+            // dojeżdżałby równo do końca. 100svh jest stabilne (nie skacze od paska adresu).
+            const vH = (stickyEl ? stickyEl.getBoundingClientRect().height : 0) || window.innerHeight;
+            const availH = vH - hH;
             const mapW = container.offsetWidth;           // = finalWidth (min-width)
 
             const b = contentBounds();
@@ -539,12 +549,14 @@
             // to równomierny zoom CAŁEJ mapy, więc bez nowych nachodzeń etykiet.
             scale = Math.min(MAX_SCALE, availH / fitH);
             maxShift = Math.max(0, mapW * scale - vw);    // pozioma droga przewijania
-            track.style.height = (window.innerHeight + maxShift) + "px";
+            track.style.height = (vH + maxShift) + "px";
             apply();
         }
 
         function apply() {
-            const hH = headerH();
+            // hH (wysokość nagłówka) bierzemy z cache liczonego w measure() — bez
+            // odczytu offsetHeight co klatkę. Zostaje JEDEN odczyt layoutu na klatkę
+            // (getBoundingClientRect toru) + jeden zapis transformu.
             const top = track.getBoundingClientRect().top;
             const progress = maxShift > 0 ? Math.min(1, Math.max(0, -top / maxShift)) : 0;
             // Najnowsze u góry: start (góra) pokazuje prawy koniec mapy (Today),
@@ -576,7 +588,6 @@
         // w contentBounds) w trakcie gestu = zacinanie i skoki skali. Na dotyku
         // mierzymy ponownie WYŁĄCZNIE przy zmianie szerokości (orientacja); na
         // desktopie mierzymy zawsze, ale z lekkim debounce.
-        const coarse = window.matchMedia('(pointer: coarse)').matches;
         let lastW = window.innerWidth;
         let resizeTimer = null;
         function onResize() {
