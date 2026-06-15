@@ -478,6 +478,35 @@ body.dark .portfolio-intro__image {
     will-change: transform;
 }
 
+/* OŚ STEROWANA SCROLLEM (off-main-thread).
+   Tam, gdzie przeglądarka wspiera animacje na osi czasu scrolla (iOS Safari 26+,
+   Chrome), pan osi liczy KOMPOZYTOR, a nie JS na każdej klatce — to usuwa
+   szarpanie scroll-linked transformu na telefonie. JS publikuje tylko zmienne
+   (--tl-scale, --tl-pany, --tl-panx-start), a tor wystawia view-timeline.
+   Faza „contain" osi = dokładnie czas, gdy tor w pełni wypełnia ekran, czyli
+   przedział przypięcia sceny — tu przesuwamy panX od -maxShift do 0. */
+@supports (animation-timeline: scroll()) {
+    .tl-active {
+        view-timeline-name: --tl-scrub;
+        view-timeline-axis: block;
+    }
+    .tl-active .tl-stage {
+        animation: tl-scrub linear both;
+        animation-timeline: --tl-scrub;
+        animation-range: contain 0% contain 100%;
+    }
+    @keyframes tl-scrub {
+        from {
+            transform: translate(var(--tl-panx-start, 0px), var(--tl-pany, 0px))
+                       scale(var(--tl-scale, 1));
+        }
+        to {
+            transform: translate(0px, var(--tl-pany, 0px))
+                       scale(var(--tl-scale, 1));
+        }
+    }
+}
+
 .subway-container {
     position: relative;
     height: 960px;

@@ -490,6 +490,15 @@
         const MAX_SCALE = 1.8;
         const header = document.querySelector('header');
 
+        // Jeśli przeglądarka wspiera animacje sterowane scrollem (CSS
+        // animation-timeline), pan osi liczy KOMPOZYTOR poza głównym wątkiem — koniec
+        // z szarpaniem scroll-linked transformu na telefonie (iOS Safari 26+). JS tylko
+        // publikuje skalę i przesunięcie jako zmienne CSS, a faktyczny przesuw robi
+        // keyframe @keyframes tl-scrub powiązany z view-timeline toru (zob. style.css).
+        // Bez wsparcia — fallback do liczenia transformu w rAF na zdarzeniu scroll.
+        const scrollDriven = !!(window.CSS && CSS.supports &&
+            CSS.supports('animation-timeline: scroll()'));
+
         let scale = 1;
         let maxShift = 0;
         let contentTop = 0;   // górna krawędź realnej treści (px mapy)
@@ -510,7 +519,12 @@
         // ile by torów nie wyszło z danych, oś zawsze mieści się w całości z równym
         // marginesem. Liczymy tylko etykiety (nie pełnowysokie linie lat / SVG).
         function contentBounds() {
+            const prevAnim = stage.style.animationName;
             const prev = stage.style.transform;
+            // Mierzymy w nieprzeskalowanym układzie mapy. W trybie scroll-driven sama
+            // animacja CSS nadpisuje transform inline, więc najpierw ją wyłączamy
+            // (animation-name:none), inaczej czytalibyśmy rect-y już przeskalowane.
+            stage.style.animationName = "none";
             stage.style.transform = "none";
             const base = container.getBoundingClientRect().top;
             let top = Infinity;
@@ -522,6 +536,7 @@
                 bottom = Math.max(bottom, r.bottom - base);
             });
             stage.style.transform = prev;
+            stage.style.animationName = prevAnim;
             if (top === Infinity) {
                 top = 0;
                 bottom = container.offsetHeight;
@@ -544,11 +559,26 @@
             scale = Math.min(MAX_SCALE, availH / fitH);
             maxShift = Math.max(0, mapW * scale - vw);    // pozioma droga przewijania
             track.style.height = (window.innerHeight + maxShift) + "px";
-            // Pozycja toru względem dokumentu (po ustawieniu wysokości — własny top
-            // toru się od niej nie zmienia). W apply() odejmiemy tylko scrollY, więc
-            // klatka scrolla nie musi już wołać getBoundingClientRect().
-            trackTop = track.getBoundingClientRect().top + window.scrollY;
-            apply();
+            if (scrollDriven) {
+                publishVars();
+            } else {
+                // Pozycja toru względem dokumentu (po ustawieniu wysokości — własny top
+                // toru się od niej nie zmienia). W apply() odejmiemy tylko scrollY, więc
+                // klatka scrolla nie musi już wołać getBoundingClientRect().
+                trackTop = track.getBoundingClientRect().top + window.scrollY;
+                apply();
+            }
+        }
+
+        // Tryb scroll-driven: zamiast liczyć transform na każdej klatce, publikujemy
+        // tylko parametry jako zmienne CSS, a keyframe tl-scrub przesuwa scenę po osi
+        // X od -maxShift do 0. W fazie przypięcia panY jest stałe (stickyTop=0 →
+        // headerClear=headerHeight), więc keyframe zmienia wyłącznie panX.
+        function publishVars() {
+            const panY = headerHeight - contentTop * scale;
+            stage.style.setProperty("--tl-panx-start", (-maxShift) + "px");
+            stage.style.setProperty("--tl-pany", panY + "px");
+            stage.style.setProperty("--tl-scale", scale);
         }
 
         function apply() {
@@ -596,7 +626,11 @@
             resizeTimer = setTimeout(measure, 150);
         }
 
-        window.addEventListener("scroll", onScroll, { passive: true });
+        // Scroll obsługuje kompozytor (CSS), więc nasłuch scrolla podpinamy TYLKO w
+        // fallbacku. resize potrzebny zawsze — przelicza skalę/zmienne CSS po obrocie.
+        if (!scrollDriven) {
+            window.addEventListener("scroll", onScroll, { passive: true });
+        }
         window.addEventListener("resize", onResize, { passive: true });
         // Web-fonty zmieniają wysokość etykiet (zawijanie) — przemierz po ich
         // załadowaniu, żeby granice nie były liczone na zastępczym foncie.
