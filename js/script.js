@@ -531,19 +531,20 @@
             return { top, bottom };
         }
 
-        function measure() {
-            hH = headerH();                                // cache na całą sesję scrolla
+        // Tani re-fit pod AKTUALNY viewport: skala, pozioma droga przewijania i
+        // wysokość toru. Korzysta z granic treści (contentTop, fitH) policzonych
+        // ostatnio w measure() — są niezależne od wysokości viewportu (contentBounds
+        // liczy offsety w px mapy). BEZ contentBounds() tutaj: nie czytamy dziesiątek
+        // prostokątów, więc bezpieczne przy częstych zmianach wysokości (pasek adresu).
+        function refit() {
             const vw = window.innerWidth;
-            // Wysokość przypięcia bierzemy z FAKTYCZNEJ wysokości .tl-sticky (CSS: 100svh),
+            // Wysokość przypięcia bierzemy z FAKTYCZNEJ wysokości .tl-sticky (CSS: 100dvh),
             // nie z window.innerHeight — inaczej JS i CSS liczyłyby inną wysokość i pan nie
-            // dojeżdżałby równo do końca. 100svh jest stabilne (nie skacze od paska adresu).
+            // dojeżdżałby równo do końca. 100dvh = aktualny viewport (śledzi pasek adresu),
+            // więc box zawsze wypełnia ekran — bez białej przerwy pod osią przy zjeździe w dół.
             const vH = (stickyEl ? stickyEl.getBoundingClientRect().height : 0) || window.innerHeight;
             const availH = vH - hH;
             const mapW = container.offsetWidth;           // = finalWidth (min-width)
-
-            const b = contentBounds();
-            contentTop = b.top - PAD;
-            fitH = b.bottom - b.top + PAD * 2;            // treść + oddech góra/dół
             // Skala WYPEŁNIA wysokość: niskie okna zmniejszają, wysokie powiększają
             // (do MAX_SCALE), by treść sięgała i góry, i dołu. Skala jest globalna —
             // to równomierny zoom CAŁEJ mapy, więc bez nowych nachodzeń etykiet.
@@ -551,6 +552,14 @@
             maxShift = Math.max(0, mapW * scale - vw);    // pozioma droga przewijania
             track.style.height = (vH + maxShift) + "px";
             apply();
+        }
+
+        function measure() {
+            hH = headerH();                                // cache na całą sesję scrolla
+            const b = contentBounds();
+            contentTop = b.top - PAD;
+            fitH = b.bottom - b.top + PAD * 2;            // treść + oddech góra/dół
+            refit();
         }
 
         function apply() {
@@ -585,16 +594,22 @@
 
         // Na telefonie pokazanie/schowanie paska adresu zmienia tylko wysokość okna
         // i wywołuje lawinę „resize". Pełny measure() (czyta dziesiątki prostokątów
-        // w contentBounds) w trakcie gestu = zacinanie i skoki skali. Na dotyku
-        // mierzymy ponownie WYŁĄCZNIE przy zmianie szerokości (orientacja); na
-        // desktopie mierzymy zawsze, ale z lekkim debounce.
+        // w contentBounds) w trakcie gestu = zacinanie i skoki skali. Dlatego na
+        // dotyku przy zmianie SAMEJ wysokości robimy tylko tani refit() (przelicza oś
+        // pod nowy viewport, bez contentBounds — likwiduje białą przerwę u dołu), a
+        // pełny measure() przy zmianie szerokości (orientacja). Na desktopie mierzymy
+        // zawsze, z lekkim debounce.
         let lastW = window.innerWidth;
         let resizeTimer = null;
         function onResize() {
-            if (coarse && window.innerWidth === lastW) return;
+            const widthChanged = window.innerWidth !== lastW;
             lastW = window.innerWidth;
             if (resizeTimer) clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(measure, 150);
+            if (coarse && !widthChanged) {
+                resizeTimer = setTimeout(refit, 120);
+            } else {
+                resizeTimer = setTimeout(measure, 150);
+            }
         }
 
         window.addEventListener("scroll", onScroll, { passive: true });

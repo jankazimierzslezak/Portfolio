@@ -457,7 +457,7 @@ body.dark .portfolio-intro__image {
     position: sticky;
     top: 0;
     height: 100vh;    /* fallback dla starych przeglądarek */
-    height: 100svh;   /* stabilne — nie skacze przy chowaniu/pokazywaniu paska adresu na telefonie */
+    height: 100dvh;   /* dynamiczne — box zawsze = aktualny viewport (śledzi pasek adresu), bez białej przerwy u dołu przy zjeździe w dół */
     overflow: hidden;
 }
 
