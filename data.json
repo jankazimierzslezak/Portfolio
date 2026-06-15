@@ -15,7 +15,7 @@
       "title": "Faculty of Medicine",
       "subtitle": "Poznan University of Medical Sciences",
       "description": "<p></p>",
-      "image": "img/pums.jpg"
+      "image": "img/pums.webp"
     },
     {
       "id": "intern-jonscher",
@@ -26,7 +26,7 @@
       "title": "Dr. N. Retkowska-Tomaszewska's team",
       "subtitle": "Neurosurgical ward, Jonscher Clinical Hospital",
       "description": "<p>Clinical observership</p>",
-      "image": "img/jonshera.jpg"
+      "image": "img/jonshera.webp"
     },
     {
       "id": "intern-usk",
@@ -36,7 +36,7 @@
       "title": "Prof. G. Dworacki’s team",
       "subtitle": "Clinical Hospital of Poznan University of Medical Sciences",
       "description": "<ul><li>Developing proficiency in microscopic review of bone marrow trephine biopsies (H&E, IHC)</li><li>Assisting with structuring pathology reports and co-developing a results reporting tool</li><li>Building foundational skills in flow cytometry and performing cell culture under supervision</li></ul>",
-      "image": "img/usk.jpg"
+      "image": "img/usk.webp"
     },
     {
       "id": "intern-medart",
@@ -46,7 +46,7 @@
       "title": "MedART",
       "subtitle": "Infertility Diagnosis and Treatment Center",
       "description": "<ul><li>Training AI based to recognize CD138+, CD79a+, CD56+ and CD15+ cells</li><li>Archiving paraffin blocks, slides and scanning histopathology slides</li></ul>",
-      "image": "img/medart.jpg"
+      "image": "img/medart.webp"
     },
     {
       "id": "work-wcp-1",
@@ -57,7 +57,7 @@
       "title": "Trainee Medical Assistant",
       "subtitle": "Specialist Mother & Child Health Care Center",
       "description": "<ul><li>Provided care for patients aged 0-3 years</li><li>Performed minor medical procedures</li></ul>",
-      "image": "img/wcp.jpg"
+      "image": "img/wcp.webp"
     },
     {
       "id": "work-wcp-2",
@@ -68,7 +68,7 @@
       "title": "Medical Assistant",
       "subtitle": "Specialist Mother & Child Health Care Center",
       "description": "<ul><li>Assisted physicians during examinations</li><li>Prepared and reviewed medical documentation</li></ul>",
-      "image": "img/wcp.jpg"
+      "image": "img/wcp.webp"
     },
     {
       "id": "work-consilio",
@@ -79,7 +79,7 @@
       "title": "Laboratory Assistant",
       "subtitle": "Consilio Diagnostica Poznań",
       "description": "<ul><li>Received instruction in microscopic review of pathology slides H&E and IHC</li><li>Performed macroscopic assessment</li><li>Assisted in histopathology slide preparation</li></ul>",
-      "image": "img/logo_diagnostyka.png"
+      "image": "img/logo_diagnostyka.webp"
     },
     {
       "id": "pub-cells",
@@ -109,7 +109,7 @@
       "title": "Co-author, Int J Mol Sci",
       "subtitle": "Co-authored the chapter “Genetic and Molecular Basis of Lynch Syndrome” and created a figure using BioRender",
       "description": "<p>Hereditary Endometrial Cancer: Lynch Syndrome, Mismatch Repair Deficiency, and Emerging Genetic Predispositions—A Comprehensive Review with Clinical and Laboratory Guidelines</p><p><a href=\"https://doi.org/10.3390/ijms27031304\" target=\"_blank\">doi:10.3390/ijms27031304</a></p>",
-      "image": "img/lynch.jpg"
+      "image": "img/lynch.webp"
     },
     {
       "id": "pub-breast",
@@ -119,7 +119,7 @@
       "title": "Co-author, Pharmaceutics",
       "subtitle": "Prepared chapters on Immunosuppressive vs. Immunostimulatory Factors, developed figures using BioRender",
       "description": "<p>Breaking Barriers: Immune Checkpoint Inhibitors in Breast Cancer</p><p><a href=\"https://doi.org/10.3390/pharmaceutics18010034\" target=\"_blank\">doi:10.3390/pharmaceutics18010034</a></p>",
-      "image": "img/tme.jpg"
+      "image": "img/tme.webp"
     },
     {
       "id": "pub-ajcp",
@@ -139,7 +139,7 @@
       "title": "7th Greater Poland Meeting of Pediatric Surgeons",
       "subtitle": "Oral Presentation",
       "description": "<p>CSMD3 gene c.1075G>T variant in two children aged 3 and 7.</p>",
-      "image": "img/7_ostrow.jpg"
+      "image": "img/7_ostrow.webp"
     },
     {
       "id": "conf-scalpellum-3",
@@ -149,7 +149,7 @@
       "title": "SCALPELLUM: 3rd National Student Conference",
       "subtitle": "Oral Presentation",
       "description": "<p>Vomiting in infants as a potential sign of brain disorders: a case report.</p>",
-      "image": "img/3_scalpellum.jpg"
+      "image": "img/3_scalpellum.webp"
     },
     {
       "id": "conf-hospital",
@@ -169,7 +169,7 @@
       "title": "8th Greater Poland Meeting of Pediatric Surgeons",
       "subtitle": "Oral Presentation",
       "description": "<p>Rare case of arteriovenous malformation in a newborn.</p>",
-      "image": "img/8_ostrow.jpg"
+      "image": "img/8_ostrow.webp"
     },
     {
       "id": "conf-neuro",
@@ -189,7 +189,7 @@
       "title": "SCALPELLUM: 4th National Student Conference",
       "subtitle": "Oral Presentation",
       "description": "<p>Abusive Head Trauma in an Infant - Diagnostic Significance of Ocular Fundus Examination: A Case Report.</p>",
-      "image": "img/4_scalpellum.jpg"
+      "image": "img/4_scalpellum.webp"
     },
     {
       "id": "conf-bluezones",
@@ -219,7 +219,7 @@
       "title": "Benign Entities in Blood and Bone Marrow",
       "subtitle": "",
       "description": "<p></p>",
-      "image": "img/benign_entities_in_blood_and_bone_marow.jpg"
+      "image": "img/benign_entities_in_blood_and_bone_marow.webp"
     },
     {
       "id": "course-gu-path",
@@ -229,7 +229,7 @@
       "title": "Prostate and Seminal Vesicles",
       "subtitle": "",
       "description": "<p></p>",
-      "image": "img/prostate_and_seminal_vesicles.jpg"
+      "image": "img/prostate_and_seminal_vesicles.webp"
     },
     {
       "id": "course-hemato-malignant",
@@ -239,7 +239,7 @@
       "title": "Malignant Entities in Blood & Bone Marrow",
       "subtitle": "",
       "description": "<p></p>",
-      "image": "img/malignant_entities_in_blood_and_bone_marrow.jpg"
+      "image": "img/malignant_entities_in_blood_and_bone_marrow.webp"
     },
     {
       "id": "course-ai-fluency",
@@ -249,7 +249,7 @@
       "title": "AI Fluency: Framework & Foundations",
       "subtitle": "",
       "description": "<p></p>",
-      "image": "img/ai_fluency_framework_and_foundations.jpg"
+      "image": "img/ai_fluency_framework_and_foundations.webp"
     }
   ]
 }
