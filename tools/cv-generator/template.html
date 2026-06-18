@@ -3,8 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <style>
+    /* Inter osadzony lokalnie — STATYCZNE, PEŁNE instancje TTF (Regular 400 /
+       Bold 700 / Italic) złożone (fontTools merge) z subsetów latin + latin-ext,
+       więc JEDEN plik na wagę/styl ma komplet: ASCII + polskie znaki (ą ć ę ł ń
+       ó ś ź ż). Jedna twarz per waga = brak doboru przez `unicode-range`, którego
+       WeasyPrint nie składa poprawnie przy wielu @font-face tej samej rodziny
+       (mylił glify diakrytyczne w nazwisku). TTF = czytany natywnie (bez brotli),
+       waga jawna (WeasyPrint nie przyjmuje `font-weight:100 900`) → render
+       deterministyczny na CI (Linux, bez fontów systemowych) i lokalnie. Ścieżki
+       względne do base_url=ROOT (patrz build_cv.py). */
+    @font-face {
+        font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap;
+        src: url(tools/cv-generator/fonts/inter-regular.ttf) format('truetype');
+    }
+    @font-face {
+        font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
+        src: url(tools/cv-generator/fonts/inter-bold.ttf) format('truetype');
+    }
+    @font-face {
+        font-family: 'Inter'; font-style: italic; font-weight: 400; font-display: swap;
+        src: url(tools/cv-generator/fonts/inter-italic.ttf) format('truetype');
+    }
     @page { size: A4; margin: 15mm; background-color: #fafafa; }
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.4; font-size: 9.5pt; }
+    body { font-family: 'Inter', sans-serif; color: #333; line-height: 1.4; font-size: 9.5pt; }
     h1 { font-size: 24pt; color: #1d3557; margin: 0 0 5px 0; }
     .subtitle { font-size: 11pt; color: #c5839b; font-weight: bold; margin-bottom: 12px; }
     .contact { font-size: 8.5pt; color: #555; margin-bottom: 15px; border-bottom: 2px solid #5286c4; padding-bottom: 8px; }
