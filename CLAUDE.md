@@ -39,6 +39,10 @@ pip install -r tools/cv-generator/requirements.txt   # WeasyPrint
 python tools/cv-generator/build_cv.py
 ```
 
+`make build` na świeżym klonie PADA („No such file or directory: .venv/bin/python") —
+generator CV chodzi we własnym `venv`, który zakłada dopiero `make install`.
+Strona sama się nie buduje (statyczne pliki), więc bez CV nic więcej nie trzeba.
+
 - **Deploy:** automatyczny — push na `main` uruchamia `.github/workflows/deploy.yml`
   (buduje CV i publikuje całość na GitHub Pages). Nie publikuj ręcznie.
 
@@ -57,6 +61,18 @@ systemowe Pango/Cairo — zob. `deploy.yml`).
 
 Żywa dokumentacja — aktualizuj, gdy zmienia się generowanie CV, deploy albo
 struktura `data.json`.
+
+## Brak narzędzi jakości — decyzja, nie przeoczenie
+
+Portfolio nie ma `package.json`, testów ani lintu i **tak ma zostać**. Cały kod
+to pięć plików (cztery `js/`, jeden generator CV), strona jest statyczna,
+a jedyną bramką jest to, czy `make build` przechodzi. Łańcuch narzędzi
+kosztowałby tu więcej utrzymania, niż wnosi — inaczej niż w `bijou-site`,
+gdzie sześćdziesiąt plików uzasadnia `make lint` i `make test`.
+
+Gdyby portfolio urosło ponad ~15 plików JS, sensowne będzie przeniesienie
+konfiguracji z `bijou-site/eslint.config.mjs` (ten sam podział na świat Node
+i świat przeglądarki).
 
 ## Git / PR
 
