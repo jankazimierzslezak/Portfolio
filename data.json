@@ -49,6 +49,16 @@
       "image": "img/medart.webp"
     },
     {
+      "id": "intern-usk-volunteer",
+      "line": "internships",
+      "dateLabel": "Jul 2026 - Present",
+      "date": "2026-07",
+      "title": "Volunteer, Department of Pathomorphology",
+      "subtitle": "Clinical Hospital of Poznan University of Medical Sciences",
+      "description": "<ul><li>Assisting with macroscopic assessment</li></ul>",
+      "image": "img/usk.webp"
+    },
+    {
       "id": "work-wcp-1",
       "line": "work",
       "dateLabel": "Aug 2022 - Sep 2023",
