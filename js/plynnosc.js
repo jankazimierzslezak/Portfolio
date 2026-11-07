@@ -1,0 +1,1 @@
+!function(){"use strict";if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&"undefined"!=typeof Lenis){var e=new Lenis({lerp:.2,smoothWheel:!0,wheelMultiplier:1});window.lenis=e,requestAnimationFrame(function i(n){e.raf(n),requestAnimationFrame(i)})}}();

@@ -1,0 +1,1 @@
+!function(){var t=document.querySelector(".lang-seg");t&&t.addEventListener("click",function(e){var a=e.target.closest(".lang-seg__btn");if(a&&t.contains(a)){var n=a.getAttribute("data-lang");if(n){e.preventDefault();try{localStorage.setItem("bijou.lang",n)}catch(t){}window.location.href="/"+n+"/"+window.location.hash}}})}();
